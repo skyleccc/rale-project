@@ -2,7 +2,7 @@ const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
-const createOrder = async ({userID, shippingAmount, isPaid, addressID, dateOrdered, status, dateArrived, paymentMethod}) => {
+const createOrder = async ({userID, shippingAmount, isPaid, addressID, status, dateArrived = null, paymentMethod}) => {
     const order = await prisma.order.create({
         data: {
             user: {
@@ -17,9 +17,8 @@ const createOrder = async ({userID, shippingAmount, isPaid, addressID, dateOrder
                     addressID: addressID,
                 }
             },
-            dateOrdered: dateOrdered,
-            status: status,
             dateArrived: dateArrived,
+            status: status,
             paymentMethod: paymentMethod,
         },
     });
@@ -54,7 +53,7 @@ const updateOrder = async ({ orderID, shippingAmount, isPaid, addressID, dateOrd
     return updatedOrder;
 };
 
-const deleteOrder = async ({ orderID }) => {
+const deleteOrder = async (orderID) => {
     const find = await findOrder(orderID);
 
     if(!find) return null;

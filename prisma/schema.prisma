@@ -113,7 +113,7 @@ model Order {
   address Address @relation(fields: [addressID], references: [addressID])
   dateOrdered DateTime @default(now())
   status String
-  dateArrived DateTime
+  dateArrived DateTime?
   paymentMethod String
   items Order_Item[]
 }

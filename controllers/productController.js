@@ -51,13 +51,13 @@ const deleteProductController = async (req, res) => {
 };
 
 const getProductController = async (req, res) => {
-    const id = parseInt(req.params.id, 10);
+    const productID = parseInt(req.params.id, 10);
 
-    if (!id || !Number.isInteger(id)) {
+    if (!productID || !Number.isInteger(productID)) {
         return handleValidationError(res, 400, "Invalid product ID");
     }
 
-    const product = await productService.findProduct(id);
+    const product = await productService.findProduct(productID);
 
     if (!product) {
         return handleValidationError(res, 404, "Product not found");

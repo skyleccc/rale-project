@@ -9,6 +9,7 @@ app.use(express.json());
 app.use("/user", routes.userRoutes);
 app.use("/product", routes.productRoutes);
 app.use("/address", routes.addressRoutes);
+app.use("/order", routes.orderRoutes);
 
 
 app.use(errorHandler);

@@ -1,0 +1,147 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum user_Role {
+  ADMIN
+  CUSTOMER
+}
+
+model User {
+  userID Int @id @default(autoincrement())
+  email String @unique
+  username String @unique
+  password String
+  userFirstName String
+  userLastName String
+  phoneNumber String
+  role user_Role @default(CUSTOMER)
+  addresses Address[]
+  orders Order[]
+  cart Shopping_Cart[]
+  reviews Product_Review[]
+}
+
+model Product_Review {
+  reviewID Int @id @default(autoincrement())
+  userID Int
+  user User @relation(fields: [userID], references: [userID])
+  productID Int
+  product Product @relation(fields: [productID], references: [productID])
+  title String
+  description String
+  rating Int
+  createdAt DateTime @default(now())
+}
+
+enum prod_Category {
+  NONE
+  SHIRTS
+  PANTS
+  ACCESSORIES
+  UNDERWEARS
+  HATS
+}
+
+model Product {
+  productID Int @id @default(autoincrement())
+  name String
+  description String
+  price Decimal
+  discount Decimal
+  releasedAt DateTime @default(now())
+  category prod_Category @default(NONE)
+  imagePath String @default("def.jpg")
+  inventory Product_Inventory[]
+  reviews Product_Review[]
+}
+
+model Product_Inventory {
+  inventoryID Int @id @default(autoincrement())
+  productID Int
+  product Product @relation(fields: [productID], references: [productID])
+  sizeID Int
+  size Size @relation(fields: [sizeID], references: [sizeID])
+  productQuantity Int
+  cartItems Cart_Item[]
+  orderItems Order_Item[]
+}
+
+model Size {
+  sizeID Int @id @default(autoincrement())
+  name String
+  products Product_Inventory[]
+}
+
+enum addr_Category {
+  HOME
+  OFFICE
+}
+
+model Address {
+  addressID Int @id @default(autoincrement())
+  userID Int
+  user User @relation(fields: [userID], references: [userID])
+  street String
+  city String
+  zipCode String
+  category addr_Category @default(HOME)
+  isPrimary Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders Order[]
+}
+
+model Order {
+  orderID Int @id @default(autoincrement())
+  userID Int
+  user User @relation(fields: [userID], references: [userID])
+  shippingAmount Decimal
+  isPaid Boolean @default(false)
+  addressID Int
+  address Address @relation(fields: [addressID], references: [addressID])
+  dateOrdered DateTime @default(now())
+  status String
+  dateArrived DateTime
+  paymentMethod String
+  items Order_Item[]
+}
+
+model Order_Item {
+  itemID Int @id @default(autoincrement())
+  orderID Int
+  order Order @relation(fields: [orderID], references: [orderID])
+  inventoryID Int
+  inventory Product_Inventory @relation(fields: [inventoryID], references: [inventoryID])
+  quantity Int
+  priceAtPurchase Decimal
+}
+
+model Shopping_Cart {
+  cartID Int @id @default(autoincrement())
+  userID Int
+  user User @relation(fields: [userID], references: [userID])
+  updatedAt DateTime @updatedAt
+  items Cart_Item[]
+}
+
+model Cart_Item {
+  itemID Int @id @default(autoincrement())
+  cartID Int
+  cart Shopping_Cart @relation(fields: [cartID], references: [cartID])
+  inventoryID Int
+  inventory Product_Inventory @relation(fields: [inventoryID], references: [inventoryID])
+  quantity Int
+  updatedAt DateTime @updatedAt
+}

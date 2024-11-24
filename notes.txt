@@ -1,0 +1,13 @@
+// size could have been enum
+// order.status could have been enum
+// payment method could have been enum
+// product review could connect to inventory instead of product (?)
+
+
+user name or password login
+separate username and password change (?)
+check for phone number
+check for password length and email (handling)
+remove user (?)
+admin role
+account creation date

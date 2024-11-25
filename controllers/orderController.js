@@ -20,16 +20,17 @@ const addOrderController = async (req, res) => {
 
 const editOrderController = async (req, res) => {
     const {shippingAmount, isPaid, addressID, dateOrdered, status, dateArrived, paymentMethod} = req.body;
+    const orderID = parseInt(req.params.id, 10);
 
     if(!addressID || !Number.isInteger(addressID)){
         return handleValidationError(res, 401, "Invalid address ID");
     }
 
-    if(!paymentMethod || !shippingAmount || !isPaid || !dateOrdered || !status || !dateArrived){
+    if(!paymentMethod || !shippingAmount || !dateOrdered || !status){
         return handleValidationError(res, 400, "All fields must be filled");
     }
 
-    const updatedOrder = await orderService.updateOrder({ shippingAmount, isPaid, addressID, dateOrdered, status, dateArrived, paymentMethod });
+    const updatedOrder = await orderService.updateOrder({ orderID, shippingAmount, isPaid, addressID, dateOrdered, status, dateArrived, paymentMethod });
 
     if(!updatedOrder){
         return handleValidationError(res, 404, "Order not found");

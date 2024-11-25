@@ -26,14 +26,14 @@ const createOrder = async ({userID, shippingAmount, isPaid, addressID, status, d
     return order;
 };
 
-const updateOrder = async ({ orderID, shippingAmount, isPaid, addressID, dateOrdered, status, dateArrived, paymentMethod }) => {
+const updateOrder = async ({ orderID, shippingAmount, isPaid, addressID, dateOrdered, status, dateArrived = null, paymentMethod }) => {
     const find = await findOrder(orderID);
 
     if(!find) return null;
 
     const updatedOrder = await prisma.order.update({
         where: {
-            addressID: addressID,
+            orderID: orderID,
         },
         data: {
             shippingAmount: shippingAmount,

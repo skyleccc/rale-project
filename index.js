@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
-const port = 3000;
+
+require('dotenv').config();
+
+const port = process.env.PORT || 3000;
 
 const routes = require("./routes");
 const errorHandler = require("./middleware/errorMiddleware");
@@ -10,7 +13,8 @@ app.use("/user", routes.userRoutes);
 app.use("/product", routes.productRoutes);
 app.use("/address", routes.addressRoutes);
 app.use("/order", routes.orderRoutes);
-
+app.use("/size", routes.sizeRoutes);
+app.use("/productInventory", routes.productInventoryRoutes);
 
 app.use(errorHandler);
 

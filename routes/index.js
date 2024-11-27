@@ -4,7 +4,7 @@ const addressRoutes = require("./addressRoutes");
 const orderRoutes = require("./orderRoutes");
 const sizeRoutes = require("./sizeRoutes");
 const productInventoryRoutes = require("./productInventoryRoutes");
-
+const orderItemRoutes = require("./orderItemRoutes");
 
 module.exports = {
     userRoutes,
@@ -13,4 +13,5 @@ module.exports = {
     orderRoutes,
     sizeRoutes,
     productInventoryRoutes,
+    orderItemRoutes,
 }

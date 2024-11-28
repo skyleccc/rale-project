@@ -14,3 +14,9 @@ account creation date
 
 date ordered not editable?
 cascade delete
+
+TO DO:
+
+shopping_Cart - done
+cart_Item
+product_Review

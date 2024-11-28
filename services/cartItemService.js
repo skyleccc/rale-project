@@ -63,7 +63,7 @@ const findAllCartItemsByCartID = async (cartID) => {
     return itemList;
 };
 
-module.export = {
+module.exports = {
     createCartItem,
     updateCartItem,
     deleteCartItem,

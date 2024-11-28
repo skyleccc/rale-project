@@ -18,5 +18,5 @@ cascade delete
 TO DO:
 
 shopping_Cart - done
-cart_Item
+cart_Item - done
 product_Review

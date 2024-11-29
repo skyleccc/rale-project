@@ -16,8 +16,6 @@ const createShoppingCart = async (userID) => {
     return cart;
 };
 
-// const updateShoppingCart = async ({ cartID })
-
 module.exports = {
     createShoppingCart,
 }

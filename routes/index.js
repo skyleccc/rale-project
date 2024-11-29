@@ -7,6 +7,7 @@ const productInventoryRoutes = require("./productInventoryRoutes");
 const orderItemRoutes = require("./orderItemRoutes");
 const shoppingCartRoutes = require("./shoppingCartRoutes");
 const cartItemRoutes = require("./cartItemRoutes");
+const productReviewRoutes = require("./productInventoryRoutes");
 
 module.exports = {
     userRoutes,
@@ -18,4 +19,5 @@ module.exports = {
     orderItemRoutes,
     shoppingCartRoutes,
     cartItemRoutes,
+    productReviewRoutes,
 }

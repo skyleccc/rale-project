@@ -18,6 +18,7 @@ app.use("/productInventory", routes.productInventoryRoutes);
 app.use("/orderItem", routes.orderItemRoutes);
 app.use("/shoppingCart", routes.shoppingCartRoutes);
 app.use("/cartItem", routes.cartItemRoutes);
+app.use("/productReview", routes.productReviewRoutes);
 
 app.use(errorHandler);
 

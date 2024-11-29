@@ -22,7 +22,7 @@ const createAddress = async ({userID, street, city, zipCode, category, isPrimary
 };
 
 const updateAddress = async ({ addressID, userID, street, city, zipCode, category, isPrimary }) => {
-    const find = await findAddress(addressID);
+    const find = await findAddress(addressID, userID);
 
     if(!find) return null;
 
@@ -44,23 +44,29 @@ const updateAddress = async ({ addressID, userID, street, city, zipCode, categor
 };
 
 const deleteAddress = async ({addressID, userID}) => {
-    const find = await findAddress(addressID);
+    const find = await findAddress(addressID, userID);
     
     if(!find) return null;
 
-    const deletedAddress = await prisma.address.delete({
+    const deletedAddress = await prisma.address.update({
         where: { 
             addressID: addressID,
             userID: userID,
+        },
+        data: {
+            userID: null,
         },
     }); 
 
     return deletedAddress;
 };
 
-const findAddress = async (addressID) => {
+const findAddress = async (addressID, userID) => {
     const address = await prisma.address.findUnique({
-        where: { addressID: addressID },
+        where: { 
+            addressID: addressID,
+            userID: userID,
+        },
     });
 
     return address;

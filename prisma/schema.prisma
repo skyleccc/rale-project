@@ -36,10 +36,10 @@ model User {
 
 model Product_Review {
   reviewID Int @id @default(autoincrement())
-  userID Int
-  user User @relation(fields: [userID], references: [userID])
+  userID Int?
+  user User? @relation(fields: [userID], references: [userID], onDelete: SetNull)
   productID Int
-  product Product @relation(fields: [productID], references: [productID])
+  product Product @relation(fields: [productID], references: [productID], onDelete: Cascade)
   title String
   description String
   rating Int
@@ -71,9 +71,9 @@ model Product {
 model Product_Inventory {
   inventoryID Int @id @default(autoincrement())
   productID Int
-  product Product @relation(fields: [productID], references: [productID])
+  product Product @relation(fields: [productID], references: [productID], onDelete: Restrict)
   sizeID Int
-  size Size @relation(fields: [sizeID], references: [sizeID])
+  size Size @relation(fields: [sizeID], references: [sizeID], onDelete: Restrict)
   productQuantity Int
   cartItems Cart_Item[]
   orderItems Order_Item[]
@@ -92,8 +92,8 @@ enum addr_Category {
 
 model Address {
   addressID Int @id @default(autoincrement())
-  userID Int
-  user User @relation(fields: [userID], references: [userID])
+  userID Int?
+  user User? @relation(fields: [userID], references: [userID], onDelete: SetNull)
   street String
   city String
   zipCode String
@@ -106,12 +106,12 @@ model Address {
 
 model Order {
   orderID Int @id @default(autoincrement())
-  userID Int
-  user User @relation(fields: [userID], references: [userID])
+  userID Int?
+  user User? @relation(fields: [userID], references: [userID], onDelete: SetNull)
   shippingAmount Decimal
   isPaid Boolean @default(false)
   addressID Int
-  address Address @relation(fields: [addressID], references: [addressID])
+  address Address @relation(fields: [addressID], references: [addressID], onDelete: Restrict)
   dateOrdered DateTime @default(now())
   status String
   dateArrived DateTime?
@@ -122,9 +122,9 @@ model Order {
 model Order_Item {
   itemID Int @id @default(autoincrement())
   orderID Int
-  order Order @relation(fields: [orderID], references: [orderID])
+  order Order @relation(fields: [orderID], references: [orderID], onDelete: Cascade)
   inventoryID Int
-  inventory Product_Inventory @relation(fields: [inventoryID], references: [inventoryID])
+  inventory Product_Inventory @relation(fields: [inventoryID], references: [inventoryID], onDelete: Restrict)
   quantity Int
   priceAtPurchase Decimal
 }
@@ -132,7 +132,7 @@ model Order_Item {
 model Shopping_Cart {
   cartID Int @id @default(autoincrement())
   userID Int
-  user User @relation(fields: [userID], references: [userID])
+  user User @relation(fields: [userID], references: [userID], onDelete: Cascade)
   updatedAt DateTime @updatedAt
   items Cart_Item[]
 }
@@ -140,9 +140,9 @@ model Shopping_Cart {
 model Cart_Item {
   itemID Int @id @default(autoincrement())
   cartID Int
-  cart Shopping_Cart @relation(fields: [cartID], references: [cartID])
+  cart Shopping_Cart @relation(fields: [cartID], references: [cartID], onDelete: Cascade)
   inventoryID Int
-  inventory Product_Inventory @relation(fields: [inventoryID], references: [inventoryID])
+  inventory Product_Inventory @relation(fields: [inventoryID], references: [inventoryID], onDelete: Cascade)
   quantity Int
   updatedAt DateTime @updatedAt
 }

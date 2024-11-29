@@ -48,6 +48,143 @@ Below is a summary of the database tables, their associated API routes, supporte
 Format: `localhost:[PORT]/[Route]`  
 Example: `localhost:3000/user/editDetails/3`
 
+<div style="overflow-x: auto">
+  <table>
+    <thead>
+      <tr>
+        <th><strong>Table</strong></th>
+        <th><strong>Route/s</strong></th>
+        <th><strong>Operation/s</strong></th>
+        <th><strong>Request Header Type</strong></th>
+        <th><strong>Request Body</strong></th>
+        <th><strong>Authentication</strong></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>User</strong></td>
+        <td><code>/user/{id}</code></td>
+        <td><strong>Displays</strong> user details by ID</td>
+        <td><code>GET</code></td>
+        <td>None</td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><code>/user/register</code></td>
+        <td><strong>Registers</strong> a new user</td>
+        <td><code>POST</code></td>
+        <td><code>{ "email": "user@mail.com", "username": "user", "password": "pass", "phoneNumber": "number", "userFirstName": "John", "userLastName": "Doe" }</code></td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><code>/user/login</code></td>
+        <td><strong>Logs in</strong> a user</td>
+        <td><code>POST</code></td>
+        <td><code>{ "email": "user@mail.com", "password": "pass" }</code></td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><code>/user/editDetails/{id}</code></td>
+        <td><strong>Edits</strong> user details by ID</td>
+        <td><code>PUT</code></td>
+        <td><code>{ "email": "newemail@mail.com", "phoneNumber": "newnumber", "userFirstName": "NewFirstName", "userLastName": "NewLastName" }</code></td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><code>/user/editPassword/{id}</code></td>
+        <td><strong>Edits</strong> user password by ID</td>
+        <td><code>PUT</code></td>
+        <td><code>{ "password": "newpassword" }</code></td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <td><strong>Product</strong></td>
+        <td><code>/product</code></td>
+        <td><strong>Displays</strong> all products</td>
+        <td><code>GET</code></td>
+        <td>None</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><code>/product/{id}</code></td>
+        <td><strong>Displays</strong> a product by ID</td>
+        <td><code>GET</code></td>
+        <td>None</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><code>/product/add</code></td>
+        <td><strong>Adds</strong> a new product</td>
+        <td><code>POST</code></td>
+        <td><code>{ "name": "ProductName", "description": "Details", "price": 100.0, "discount": 10.0, "category": "SHIRTS", "imagePath": "image.jpg" }</code></td>
+        <td>Yes + Admin Role</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><code>/product/edit/{id}</code></td>
+        <td><strong>Edits</strong> product details by ID</td>
+        <td><code>PUT</code></td>
+        <td><code>{ "name": "NewName", "description": "UpdatedDetails", "price": 120.0, "discount": 15.0, "imagePath": "newImage.jpg" }</code></td>
+        <td>Yes + Admin Role</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><code>/product/delete/{id}</code></td>
+        <td><strong>Deletes</strong> a product by ID</td>
+        <td><code>DELETE</code></td>
+        <td>None</td>
+        <td>Yes + Admin Role</td>
+      </tr>
+      <tr>
+        <td><strong>Address</strong></td>
+        <td><code>/address</code></td>
+        <td><strong>Displays</strong> all addresses</td>
+        <td><code>GET</code></td>
+        <td>None</td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><code>/address/{id}</code></td>
+        <td><strong>Displays</strong> an address by ID</td>
+        <td><code>GET</code></td>
+        <td>None</td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><code>/address/add</code></td>
+        <td><strong>Adds</strong> a new address</td>
+        <td><code>POST</code></td>
+        <td><code>{ "street": "123 Main St", "city": "SampleCity", "zipCode": "12345", "category": "HOME", "isPrimary": true }</code></td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><code>/address/edit/{id}</code></td>
+        <td><strong>Edits</strong> an address by ID</td>
+        <td><code>PUT</code></td>
+        <td><code>{ "street": "NewStreet", "city": "NewCity", "zipCode": "54321", "category": "WORK", "isPrimary": false }</code></td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><code>/address/delete/{id}</code></td>
+        <td><strong>Deletes</strong> the user relations to the address</td>
+        <td><code>DELETE</code></td>
+        <td>None</td>
+        <td>Yes</td>
+      </tr>
+      <!-- Other entities like Size, Product_Inventory, Order, Order_Item, etc. can be similarly adjusted -->
+    </tbody>
+  </table>
+</div>
 <table>
 <thead>
 <tr>
@@ -438,6 +575,8 @@ Example: `localhost:3000/user/editDetails/3`
 </tr>
 </tbody>
 </table>
+</div>
+
 
 
 ---

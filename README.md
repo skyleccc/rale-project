@@ -48,401 +48,55 @@ Below is a summary of the database tables, their associated API routes, supporte
 Format: `localhost:[PORT]/[Route]`  
 Example: `localhost:3000/user/editDetails/3`
 
-<div style="overflow-x: auto; overflow-y: auto">
-  <table>
-<thead>
-<tr>
-<th><strong>Table</strong></th>
-<th><strong>Route/s</strong></th>
-<th><strong>Operation/s</strong></th>
-<th><strong>Request Header Type</strong></th>
-<th><strong>Request Body</strong></th>
-<th><strong>Authentication</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td rowspan="5"><strong>User</strong></td>
-<td><code>/user/{id}</code></td>
-<td><strong>Displays</strong> user details by ID</td>
-<td><code>GET</code></td>
-<td>None</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/user/register</code></td>
-<td><strong>Registers</strong> a new user</td>
-<td><code>POST</code></td>
-<td><code>{ &quot;email&quot;: &quot;user@mail.com&quot;, &quot;username&quot;: &quot;user&quot;, &quot;password&quot;: &quot;pass&quot;, &quot;phoneNumber&quot;: &quot;number&quot;, &quot;userFirstName&quot;: &quot;John&quot;, &quot;userLastName&quot;: &quot;Doe&quot; }</code></td>
-<td>No</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/user/login</code></td>
-<td><strong>Logs in</strong> a user</td>
-<td><code>POST</code></td>
-<td><code>{ &quot;email&quot;: &quot;user@mail.com&quot;, &quot;password&quot;: &quot;pass&quot; }</code></td>
-<td>No</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/user/editDetails/{id}</code></td>
-<td><strong>Edits</strong> user details by ID</td>
-<td><code>PUT</code></td>
-<td><code>{ &quot;email&quot;: &quot;newemail@mail.com&quot;, &quot;phoneNumber&quot;: &quot;newnumber&quot;, &quot;userFirstName&quot;: &quot;NewFirstName&quot;, &quot;userLastName&quot;: &quot;NewLastName&quot; }</code></td>
-<td>Yes</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/user/editPassword/{id}</code></td>
-<td><strong>Edits</strong> user password by ID</td>
-<td><code>PUT</code></td>
-<td><code>{ &quot;password&quot;: &quot;newpassword&quot; }</code></td>
-<td>Yes</td>
-</tr>
-<tr>
-<td rowspan="5"><strong>Product</strong></td>
-<td><code>/product</code></td>
-<td><strong>Displays</strong> all products</td>
-<td><code>GET</code></td>
-<td>None</td>
-<td>No</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/product/{id}</code></td>
-<td><strong>Displays</strong> a product by ID</td>
-<td><code>GET</code></td>
-<td>None</td>
-<td>No</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/product/add</code></td>
-<td><strong>Adds</strong> a new product</td>
-<td><code>POST</code></td>
-<td><code>{ &quot;name&quot;: &quot;ProductName&quot;, &quot;description&quot;: &quot;Details&quot;, &quot;price&quot;: 100.0, &quot;discount&quot;: 10.0, &quot;category&quot;: &quot;SHIRTS&quot;, &quot;imagePath&quot;: &quot;image.jpg&quot; }</code></td>
-<td>Yes + Admin Role</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/product/edit/{id}</code></td>
-<td><strong>Edits</strong> product details by ID</td>
-<td><code>PUT</code></td>
-<td><code>{ &quot;name&quot;: &quot;NewName&quot;, &quot;description&quot;: &quot;UpdatedDetails&quot;, &quot;price&quot;: 120.0, &quot;discount&quot;: 15.0, &quot;imagePath&quot;: &quot;newImage.jpg&quot; }</code></td>
-<td>Yes + Admin Role</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/product/delete/{id}</code></td>
-<td><strong>Deletes</strong> a product by ID</td>
-<td><code>DELETE</code></td>
-<td>None</td>
-<td>Yes + Admin Role</td>
-</tr>
-<tr>
-<td rowspan="5"><strong>Address</strong></td>
-<td><code>/address</code></td>
-<td><strong>Displays</strong> all addresses</td>
-<td><code>GET</code></td>
-<td>None</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/address/{id}</code></td>
-<td><strong>Displays</strong> an address by ID</td>
-<td><code>GET</code></td>
-<td>None</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/address/add</code></td>
-<td><strong>Adds</strong> a new address</td>
-<td><code>POST</code></td>
-<td><code>{ &quot;street&quot;: &quot;123 Main St&quot;, &quot;city&quot;: &quot;SampleCity&quot;, &quot;zipCode&quot;: &quot;12345&quot;, &quot;category&quot;: &quot;HOME&quot;, &quot;isPrimary&quot;: true }</code></td>
-<td>Yes</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/address/edit/{id}</code></td>
-<td><strong>Edits</strong> an address by ID</td>
-<td><code>PUT</code></td>
-<td><code>{ &quot;street&quot;: &quot;NewStreet&quot;, &quot;city&quot;: &quot;NewCity&quot;, &quot;zipCode&quot;: &quot;54321&quot;, &quot;category&quot;: &quot;WORK&quot; &quot;isPrimary&quot;: false }</code></td>
-<td>Yes</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/address/delete/{id}</code></td>
-<td><strong>Deletes</strong> the user relations to the address</td>
-<td><code>DELETE</code></td>
-<td>None</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td rowspan="5"><strong>Size</strong></td>
-<td><code>/size</code></td>
-<td><strong>Displays</strong> all sizes</td>
-<td><code>GET</code></td>
-<td>None</td>
-<td>No</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/size/{id}</code></td>
-<td><strong>Displays</strong> a size by ID</td>
-<td><code>GET</code></td>
-<td>None</td>
-<td>No</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/size/add</code></td>
-<td><strong>Adds</strong> a new size</td>
-<td><code>POST</code></td>
-<td><code>{ &quot;name&quot;: &quot;XL&quot; }</code></td>
-<td>Yes + Admin Role</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/size/edit/{id}</code></td>
-<td><strong>Edits</strong> a size by ID</td>
-<td><code>PUT</code></td>
-<td><code>{ &quot;name&quot;: &quot;NewSize&quot; }</code></td>
-<td>Yes + Admin Role</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/size/delete/{id}</code></td>
-<td><strong>Deletes</strong> a size by ID</td>
-<td><code>DELETE</code></td>
-<td>None</td>
-<td>Yes + Admin Role</td>
-</tr>
-<tr>
-<td rowspan="5"><strong>Product_Inventory</strong></td>
-<td><code>/productInventory</code></td>
-<td><strong>Displays</strong> all product inventory</td>
-<td><code>GET</code></td>
-<td>None</td>
-<td>No</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/productInventory/{id}</code></td>
-<td><strong>Displays</strong> product inventory by ID</td>
-<td><code>GET</code></td>
-<td>None</td>
-<td>No</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/productInventory/add</code></td>
-<td><strong>Adds</strong> inventory for a product</td>
-<td><code>POST</code></td>
-<td><code>{ &quot;productID&quot;: 1, &quot;sizeID&quot;: 1, &quot;productQuantity&quot;: 50 }</code></td>
-<td>Yes</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/productInventory/edit/{id}</code></td>
-<td><strong>Edits</strong> inventory details by ID</td>
-<td><code>PUT</code></td>
-<td><code>{ &quot;productQuantity&quot;: 60 }</code></td>
-<td>Yes</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/productInventory/delete/{id}</code></td>
-<td><strong>Deletes</strong> inventory by ID</td>
-<td><code>DELETE</code></td>
-<td>None</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td rowspan="5"><strong>Order</strong></td>
-<td><code>/order</code></td>
-<td><strong>Displays</strong> all orders</td>
-<td><code>GET</code></td>
-<td>None</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/order/{id}</code></td>
-<td><strong>Displays</strong> an order by ID</td>
-<td><code>GET</code></td>
-<td>None</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/order/add</code></td>
-<td><strong>Adds</strong> a new order</td>
-<td><code>POST</code></td>
-<td><code>{ &quot;userID&quot;: 1, &quot;addressID&quot;: 1, &quot;shippingAmount&quot;: 50.0, &quot;paymentMethod&quot;: &quot;Card&quot; }</code></td>
-<td>Yes</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/order/edit/{id}</code></td>
-<td><strong>Edits</strong> an order by ID</td>
-<td><code>PUT</code></td>
-<td><code>{ &quot;addressID&quot;: 2, &quot;shippingAmount&quot;: 50.0, &quot;status&quot;: &quot;Shipped&quot;, &quot;paymentMethod&quot;: &quot;Cash&quot;, &quot;dateArrived&quot;: &quot;2024-12-01T12:00:00Z&quot; }</code></td>
-<td>Yes + Admin Role</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/order/delete/{id}</code></td>
-<td><strong>Deletes</strong> an order by ID</td>
-<td><code>DELETE</code></td>
-<td>None</td>
-<td>Yes + Admin Role</td>
-</tr>
-<tr>
-<td rowspan="6"><strong>Order_Item</strong></td>
-<td><code>/orderItem/{id}</code></td>
-<td><strong>Displays</strong> order items by ID</td>
-<td><code>GET</code></td>
-<td>None</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/orderItem/invID/{id}</code></td>
-<td><strong>Displays</strong> order items by inventory ID</td>
-<td><code>GET</code></td>
-<td>None</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/orderItem/ordID/{id}</code></td>
-<td><strong>Displays</strong> order items by order ID</td>
-<td><code>GET</code></td>
-<td>None</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/orderItem/add</code></td>
-<td><strong>Adds</strong> an item to an order</td>
-<td><code>POST</code></td>
-<td><code>{ &quot;orderID&quot;: 1, &quot;inventoryID&quot;: 1, &quot;quantity&quot;: 2, &quot;priceAtPurchase&quot;: 100.0 }</code></td>
-<td>Yes</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/orderItem/edit/{id}</code></td>
-<td><strong>Edits</strong> an order item by ID</td>
-<td><code>PUT</code></td>
-<td><code>{ &quot;quantity&quot;: 3, &quot;priceAtPurchase&quot;: 50.0 }</code></td>
-<td>Yes + Admin Role</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/orderItem/delete/{id}</code></td>
-<td><strong>Deletes</strong> an order item by ID</td>
-<td><code>DELETE</code></td>
-<td>None</td>
-<td>Yes + Admin Role</td>
-</tr>
-<tr>
-<td><strong>Shopping_Cart</strong></td>
-<td><code>/shoppingCart/add</code></td>
-<td><strong>Initializes</strong> a shopping cart</td>
-<td><code>POST</code></td>
-<td><code>{ &quot;userID&quot;: 1 }</code></td>
-<td>Yes</td>
-</tr>
-<tr>
-<td rowspan="5"><strong>Cart_Item</strong></td>
-<td><code>/cartItem/{id}</code></td>
-<td><strong>Displays</strong> cart items by ID</td>
-<td><code>GET</code></td>
-<td>None</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/cartItem/invID/{id}</code></td>
-<td><strong>Displays</strong> cart items by inventory ID</td>
-<td><code>GET</code></td>
-<td>None</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/cartItem/add</code></td>
-<td><strong>Adds</strong> an item to a cart</td>
-<td><code>POST</code></td>
-<td><code>{ &quot;cartID&quot;: 1, &quot;inventoryID&quot;: 1, &quot;quantity&quot;: 2 }</code></td>
-<td>Yes</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/cartItem/edit/{id}</code></td>
-<td><strong>Edits</strong> a cart item by ID</td>
-<td><code>PUT</code></td>
-<td><code>{ &quot;quantity&quot;: 3 }</code></td>
-<td>Yes</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/cartItem/delete/{id}</code></td>
-<td><strong>Deletes</strong> a cart item by ID</td>
-<td><code>DELETE</code></td>
-<td>None</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td rowspan="5"><strong>Product_Review</strong></td>
-<td><code>/productReview/{id}</code></td>
-<td><strong>Displays</strong> a product review by ID</td>
-<td><code>GET</code></td>
-<td>None</td>
-<td>No</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/productReview/userID/{id}</code></td>
-<td><strong>Displays</strong> product reviews by user ID</td>
-<td><code>GET</code></td>
-<td>None</td>
-<td>No</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/productReview/productID/{id}</code></td>
-<td><strong>Displays</strong> product reviews by product ID</td>
-<td><code>GET</code></td>
-<td>None</td>
-<td>No</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/productReview/add</code></td>
-<td><strong>Adds</strong> a product review</td>
-<td><code>POST</code></td>
-<td><code>{ &quot;userID&quot;: 1, &quot;productID&quot;: 1, &quot;title&quot;: &quot;Review Title&quot;, &quot;description&quot;: &quot;Great product!&quot;, &quot;rating&quot;: 5 }</code></td>
-<td>Yes</td>
-</tr>
-<tr>
-<td></td>
-<td><code>/productReview/delete/{id}</code></td>
-<td><strong>Deletes</strong> a product review by ID</td>
-<td><code>DELETE</code></td>
-<td>None</td>
-<td>Yes + Admin Role</td>
-</tr>
-</tbody>
-</table>
-</div>
-
-
-
+| **Table**           | **Route/s**                     | **Operation/s**                                           | **Request Header Type** | **Request Body**                                          | **Authentication**        |
+|----------------------|---------------------------------|----------------------------------------------------------|--------------------------|-----------------------------------------------------------|----------------------------|
+| **User**            | `/user/{id}`                   | **Displays** user details by ID                          | `GET`                   | None                                                      | Yes                        |
+|                     | `/user/register`               | **Registers** a new user                                 | `POST`                  | `{ "email": "user@mail.com", "username": "user", "password": "pass", "phoneNumber": "number", "userFirstName": "John", "userLastName": "Doe" }` | No |
+|                     | `/user/login`                  | **Logs in** a user                                       | `POST`                  | `{ "email": "user@mail.com", "password": "pass" }`        | No |
+|                     | `/user/editDetails/{id}`       | **Edits** user details by ID                             | `PUT`                   | `{ "email": "newemail@mail.com", "phoneNumber": "newnumber", "userFirstName": "NewFirstName", "userLastName": "NewLastName" }` | Yes |
+|                     | `/user/editPassword/{id}`      | **Edits** user password by ID                            | `PUT`                   | `{ "password": "newpassword" }`                           | Yes |
+| **Product**         | `/product`                     | **Displays** all products                                | `GET`                   | None                                                      | No |
+|                     | `/product/{id}`                | **Displays** a product by ID                             | `GET`                   | None                                                      | No |
+|                     | `/product/add`                 | **Adds** a new product                                   | `POST`                  | `{ "name": "ProductName", "description": "Details", "price": 100.0, "discount": 10.0, "category": "SHIRTS", "imagePath": "image.jpg" }` | Yes + Admin Role |
+|                     | `/product/edit/{id}`           | **Edits** product details by ID                          | `PUT`                   | `{ "name": "NewName", "description": "UpdatedDetails", "price": 120.0, "discount": 15.0, "imagePath": "newImage.jpg" }` | Yes + Admin Role |
+|                     | `/product/delete/{id}`         | **Deletes** a product by ID                              | `DELETE`                | None                                                      | Yes + Admin Role |
+| **Address**         | `/address`                     | **Displays** all addresses                               | `GET`                   | None                                                      | Yes |
+|                     | `/address/{id}`                | **Displays** an address by ID                            | `GET`                   | None                                                      | Yes |
+|                     | `/address/add`                 | **Adds** a new address                                   | `POST`                  | `{ "street": "123 Main St", "city": "SampleCity", "zipCode": "12345", "category": "HOME", "isPrimary": true }` | Yes |
+|                     | `/address/edit/{id}`           | **Edits** an address by ID                               | `PUT`                   | `{ "street": "NewStreet", "city": "NewCity", "zipCode": "54321", "category": "WORK" "isPrimary": false }` | Yes |
+|                     | `/address/delete/{id}`         | **Deletes** the user relations to the address            | `DELETE`                | None                                                      | Yes |
+| **Size**            | `/size`                        | **Displays** all sizes                                   | `GET`                   | None                                                      | No |
+|                     | `/size/{id}`                   | **Displays** a size by ID                                | `GET`                   | None                                                      | No |
+|                     | `/size/add`                    | **Adds** a new size                                      | `POST`                  | `{ "name": "XL" }`                                        | Yes + Admin Role |
+|                     | `/size/edit/{id}`              | **Edits** a size by ID                                   | `PUT`                   | `{ "name": "NewSize" }`                                   | Yes + Admin Role |
+|                     | `/size/delete/{id}`            | **Deletes** a size by ID                                 | `DELETE`                | None                                                      | Yes + Admin Role |
+| **Product_Inventory**| `/productInventory`            | **Displays** all product inventory                      | `GET`                   | None                                                      | No |
+|                     | `/productInventory/{id}`       | **Displays** product inventory by ID                    | `GET`                   | None                                                      | No |
+|                     | `/productInventory/add`        | **Adds** inventory for a product                        | `POST`                  | `{ "productID": 1, "sizeID": 1, "productQuantity": 50 }`  | Yes |
+|                     | `/productInventory/edit/{id}`  | **Edits** inventory details by ID                       | `PUT`                   | `{ "productQuantity": 60 }`                               | Yes |
+|                     | `/productInventory/delete/{id}`| **Deletes** inventory by ID                             | `DELETE`                | None                                                      | Yes |
+| **Order**           | `/order`                       | **Displays** all orders                                 | `GET`                   | None                                                      | Yes |
+|                     | `/order/{id}`                  | **Displays** an order by ID                             | `GET`                   | None                                                      | Yes |
+|                     | `/order/add`                   | **Adds** a new order                                    | `POST`                  | `{ "userID": 1, "addressID": 1, "shippingAmount": 50.0, "paymentMethod": "Card" }` | Yes |
+|                     | `/order/edit/{id}`             | **Edits** an order by ID                                | `PUT`                   | `{ "addressID": 2, "shippingAmount": 50.0, "status": "Shipped", "paymentMethod": "Cash", "dateArrived": "2024-12-01T12:00:00Z" }` | Yes + Admin Role |
+|                     | `/order/delete/{id}`           | **Deletes** an order by ID                              | `DELETE`                | None                                                      | Yes + Admin Role |
+| **Order_Item**      | `/orderItem/{id}`              | **Displays** order items by ID                          | `GET`                   | None                                                      | Yes |
+|                     | `/orderItem/invID/{id}`        | **Displays** order items by inventory ID                | `GET`                   | None                                                      | Yes |
+|                     | `/orderItem/ordID/{id}`        | **Displays** order items by order ID                    | `GET`                   | None                                                      | Yes |
+|                     | `/orderItem/add`               | **Adds** an item to an order                            | `POST`                  | `{ "orderID": 1, "inventoryID": 1, "quantity": 2, "priceAtPurchase": 100.0 }` | Yes |
+|                     | `/orderItem/edit/{id}`         | **Edits** an order item by ID                           | `PUT`                   | `{ "quantity": 3, "priceAtPurchase": 50.0 }`              | Yes + Admin Role |
+|                     | `/orderItem/delete/{id}`       | **Deletes** an order item by ID                         | `DELETE`                | None                                                      | Yes + Admin Role |
+| **Shopping_Cart**   | `/shoppingCart/add`            | **Initializes** a shopping cart                        | `POST`                  | `{ "userID": 1 }`                                         | Yes |
+| **Cart_Item**       | `/cartItem/{id}`               | **Displays** cart items by ID                           | `GET`                   | None                                                      | Yes |
+|                     | `/cartItem/invID/{id}`         | **Displays** cart items by inventory ID                 | `GET`                   | None                                                      | Yes |
+|                     | `/cartItem/add`                | **Adds** an item to a cart                              | `POST`                  | `{ "cartID": 1, "inventoryID": 1, "quantity": 2 }`        | Yes |
+|                     | `/cartItem/edit/{id}`          | **Edits** a cart item by ID                             | `PUT`                   | `{ "quantity": 3 }`                                       | Yes |
+|                     | `/cartItem/delete/{id}`        | **Deletes** a cart item by ID                           | `DELETE`                | None                                                      | Yes |
+| **Product_Review**  | `/productReview/{id}`          | **Displays** a product review by ID                     | `GET`                   | None                                                      | No |
+|                     | `/productReview/userID/{id}`   | **Displays** product reviews by user ID                | `GET`                   | None                                                      | No |
+|                     | `/productReview/productID/{id}`| **Displays** product reviews by product ID             | `GET`                   | None                                                      | No |
+|                     | `/productReview/add`           | **Adds** a product review                              | `POST`                  | `{ "userID": 1, "productID": 1, "title": "Review Title", "description": "Great product!", "rating": 5 }` | Yes |
+|                     | `/productReview/delete/{id}`   | **Deletes** a product review by ID                     | `DELETE`                | None                                                      | Yes + Admin Role |
 
 ---
 

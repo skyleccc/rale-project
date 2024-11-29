@@ -48,7 +48,7 @@ Below is a summary of the database tables, their associated API routes, supporte
 Format: `localhost:[PORT]/[Route]`  
 Example: `localhost:3000/user/editDetails/3`
 
-| **Table**           | **Route/s**                     | **Operation/s**                                           | **Request Header Type** | **Request Body**                                          | **Authentication**        |
+| **Table**           | **Route/s**                     | **Operation/s**                                           | **Request Header Type** | **Request Body**                                          | **JWT Authentication**        |
 |----------------------|---------------------------------|----------------------------------------------------------|--------------------------|-----------------------------------------------------------|----------------------------|
 | **User**            | `/user/{id}`                   | **Displays** user details by ID                          | `GET`                   | None                                                      | Yes                        |
 |                     | `/user/register`               | **Registers** a new user                                 | `POST`                  | `{ "email": "user@mail.com", "username": "user", "password": "pass", "phoneNumber": "number", "userFirstName": "John", "userLastName": "Doe" }` | No |

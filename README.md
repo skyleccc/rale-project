@@ -48,6 +48,26 @@ Below is a summary of the database tables, their associated API routes, supporte
 Format: `localhost:[PORT]/[Route]`  
 Example: `localhost:3000/user/editDetails/3`
 
+<style>
+  table {
+    width: 100%;
+    table-layout: fixed; /* Distributes columns evenly */
+    border-collapse: collapse; /* Ensures no extra space between borders */
+    font-size: 12px; /* Adjust font size for smaller content */
+  }
+
+  th, td {
+    padding: 5px; /* Reduces the padding to make the cells more compact */
+    text-align: left; /* Ensures text is left-aligned */
+    border: 1px solid #ddd; /* Adds a light border for better visibility */
+  }
+
+  th {
+    background-color: #f4f4f4; /* Light gray background for headers */
+    font-weight: bold;
+  }
+</style>
+
 <div style="overflow-x: auto">
   <table>
     <thead>

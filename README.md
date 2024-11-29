@@ -48,281 +48,397 @@ Below is a summary of the database tables, their associated API routes, supporte
 Format: `localhost:[PORT]/[Route]`  
 Example: `localhost:3000/user/editDetails/3`
 
-<style>
-  table {
-    width: 100%;
-    table-layout: fixed; /* Distributes columns evenly */
-    border-collapse: collapse; /* Ensures no extra space between borders */
-    font-size: 12px; /* Adjust font size for smaller content */
-  }
-
-  th, td {
-    padding: 5px; /* Reduces the padding to make the cells more compact */
-    text-align: left; /* Ensures text is left-aligned */
-    border: 1px solid #ddd; /* Adds a light border for better visibility */
-  }
-
-  th {
-    background-color: #f4f4f4; /* Light gray background for headers */
-    font-weight: bold;
-  }
-</style>
-
-<div style="overflow-x: auto">
+<div style="overflow-x: auto; overflow-y: auto">
   <table>
-    <thead>
-      <tr>
-        <th><strong>Table</strong></th>
-        <th><strong>Route/s</strong></th>
-        <th><strong>Operation/s</strong></th>
-        <th><strong>Request Header Type</strong></th>
-        <th><strong>Request Body</strong></th>
-        <th><strong>Authentication</strong></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>User</strong></td>
-        <td><code>/user/{id}</code></td>
-        <td><strong>Displays</strong> user details by ID</td>
-        <td><code>GET</code></td>
-        <td>None</td>
-        <td>Yes</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/user/register</code></td>
-        <td><strong>Registers</strong> a new user</td>
-        <td><code>POST</code></td>
-        <td><code>{ "email": "user@mail.com", "username": "user", "password": "pass", "phoneNumber": "number", "userFirstName": "John", "userLastName": "Doe" }</code></td>
-        <td>No</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/user/login</code></td>
-        <td><strong>Logs in</strong> a user</td>
-        <td><code>POST</code></td>
-        <td><code>{ "email": "user@mail.com", "password": "pass" }</code></td>
-        <td>No</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/user/editDetails/{id}</code></td>
-        <td><strong>Edits</strong> user details by ID</td>
-        <td><code>PUT</code></td>
-        <td><code>{ "email": "newemail@mail.com", "phoneNumber": "newnumber", "userFirstName": "NewFirstName", "userLastName": "NewLastName" }</code></td>
-        <td>Yes</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/user/editPassword/{id}</code></td>
-        <td><strong>Edits</strong> user password by ID</td>
-        <td><code>PUT</code></td>
-        <td><code>{ "password": "newpassword" }</code></td>
-        <td>Yes</td>
-      </tr>
-      <tr>
-        <td><strong>Product</strong></td>
-        <td><code>/product</code></td>
-        <td><strong>Displays</strong> all products</td>
-        <td><code>GET</code></td>
-        <td>None</td>
-        <td>No</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/product/{id}</code></td>
-        <td><strong>Displays</strong> a product by ID</td>
-        <td><code>GET</code></td>
-        <td>None</td>
-        <td>No</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/product/add</code></td>
-        <td><strong>Adds</strong> a new product</td>
-        <td><code>POST</code></td>
-        <td><code>{ "name": "ProductName", "description": "Details", "price": 100.0, "discount": 10.0, "category": "SHIRTS", "imagePath": "image.jpg" }</code></td>
-        <td>Yes + Admin Role</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/product/edit/{id}</code></td>
-        <td><strong>Edits</strong> product details by ID</td>
-        <td><code>PUT</code></td>
-        <td><code>{ "name": "NewName", "description": "UpdatedDetails", "price": 120.0, "discount": 15.0, "imagePath": "newImage.jpg" }</code></td>
-        <td>Yes + Admin Role</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/product/delete/{id}</code></td>
-        <td><strong>Deletes</strong> a product by ID</td>
-        <td><code>DELETE</code></td>
-        <td>None</td>
-        <td>Yes + Admin Role</td>
-      </tr>
-      <tr>
-        <td><strong>Address</strong></td>
-        <td><code>/address</code></td>
-        <td><strong>Displays</strong> all addresses</td>
-        <td><code>GET</code></td>
-        <td>None</td>
-        <td>Yes</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/address/{id}</code></td>
-        <td><strong>Displays</strong> an address by ID</td>
-        <td><code>GET</code></td>
-        <td>None</td>
-        <td>Yes</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/address/add</code></td>
-        <td><strong>Adds</strong> a new address</td>
-        <td><code>POST</code></td>
-        <td><code>{ "street": "123 Main St", "city": "SampleCity", "zipCode": "12345", "category": "HOME", "isPrimary": true }</code></td>
-        <td>Yes</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/address/edit/{id}</code></td>
-        <td><strong>Edits</strong> an address by ID</td>
-        <td><code>PUT</code></td>
-        <td><code>{ "street": "NewStreet", "city": "NewCity", "zipCode": "54321", "category": "WORK", "isPrimary": false }</code></td>
-        <td>Yes</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/address/delete/{id}</code></td>
-        <td><strong>Deletes</strong> the user relations to the address</td>
-        <td><code>DELETE</code></td>
-        <td>None</td>
-        <td>Yes</td>
-      </tr>
-      <tr>
-        <td><strong>Size</strong></td>
-        <td><code>/size</code></td>
-        <td><strong>Displays</strong> all sizes</td>
-        <td><code>GET</code></td>
-        <td>None</td>
-        <td>No</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/size/{id}</code></td>
-        <td><strong>Displays</strong> a size by ID</td>
-        <td><code>GET</code></td>
-        <td>None</td>
-        <td>No</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/size/add</code></td>
-        <td><strong>Adds</strong> a new size</td>
-        <td><code>POST</code></td>
-        <td><code>{ "name": "XL" }</code></td>
-        <td>Yes + Admin Role</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/size/edit/{id}</code></td>
-        <td><strong>Edits</strong> a size by ID</td>
-        <td><code>PUT</code></td>
-        <td><code>{ "name": "NewSize" }</code></td>
-        <td>Yes + Admin Role</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/size/delete/{id}</code></td>
-        <td><strong>Deletes</strong> a size by ID</td>
-        <td><code>DELETE</code></td>
-        <td>None</td>
-        <td>Yes + Admin Role</td>
-      </tr>
-      <tr>
-        <td><strong>Product_Inventory</strong></td>
-        <td><code>/productInventory</code></td>
-        <td><strong>Displays</strong> all product inventory</td>
-        <td><code>GET</code></td>
-        <td>None</td>
-        <td>No</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/productInventory/{id}</code></td>
-        <td><strong>Displays</strong> product inventory by ID</td>
-        <td><code>GET</code></td>
-        <td>None</td>
-        <td>No</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/productInventory/add</code></td>
-        <td><strong>Adds</strong> a new product inventory</td>
-        <td><code>POST</code></td>
-        <td><code>{ "productId": "123", "sizeId": "2", "stock": 100 }</code></td>
-        <td>Yes + Admin Role</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/productInventory/edit/{id}</code></td>
-        <td><strong>Edits</strong> product inventory by ID</td>
-        <td><code>PUT</code></td>
-        <td><code>{ "stock": 150 }</code></td>
-        <td>Yes + Admin Role</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/productInventory/delete/{id}</code></td>
-        <td><strong>Deletes</strong> product inventory by ID</td>
-        <td><code>DELETE</code></td>
-        <td>None</td>
-        <td>Yes + Admin Role</td>
-      </tr>
-      <tr>
-        <td><strong>Order</strong></td>
-        <td><code>/order</code></td>
-        <td><strong>Displays</strong> all orders</td>
-        <td><code>GET</code></td>
-        <td>None</td>
-        <td>Yes</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/order/{id}</code></td>
-        <td><strong>Displays</strong> order details by ID</td>
-        <td><code>GET</code></td>
-        <td>None</td>
-        <td>Yes</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/order/add</code></td>
-        <td><strong>Adds</strong> a new order</td>
-        <td><code>POST</code></td>
-        <td><code>{ "userId": "1", "orderDate": "2024-11-29", "totalAmount": 150.0, "shippingAddress": "AddressID" }</code></td>
-        <td>Yes</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/order/edit/{id}</code></td>
-        <td><strong>Edits</strong> an order by ID</td>
-        <td><code>PUT</code></td>
-        <td><code>{ "totalAmount": 160.0 }</code></td>
-        <td>Yes</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>/order/delete/{id}</code></td>
-        <td><strong>Deletes</strong> an order by ID</td>
-        <td><code>DELETE</code></td>
-        <td>None</td>
-        <td>Yes</td>
-      </tr>
-    </tbody>
-  </table>
+<thead>
+<tr>
+<th><strong>Table</strong></th>
+<th><strong>Route/s</strong></th>
+<th><strong>Operation/s</strong></th>
+<th><strong>Request Header Type</strong></th>
+<th><strong>Request Body</strong></th>
+<th><strong>Authentication</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td rowspan="5"><strong>User</strong></td>
+<td><code>/user/{id}</code></td>
+<td><strong>Displays</strong> user details by ID</td>
+<td><code>GET</code></td>
+<td>None</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/user/register</code></td>
+<td><strong>Registers</strong> a new user</td>
+<td><code>POST</code></td>
+<td><code>{ &quot;email&quot;: &quot;user@mail.com&quot;, &quot;username&quot;: &quot;user&quot;, &quot;password&quot;: &quot;pass&quot;, &quot;phoneNumber&quot;: &quot;number&quot;, &quot;userFirstName&quot;: &quot;John&quot;, &quot;userLastName&quot;: &quot;Doe&quot; }</code></td>
+<td>No</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/user/login</code></td>
+<td><strong>Logs in</strong> a user</td>
+<td><code>POST</code></td>
+<td><code>{ &quot;email&quot;: &quot;user@mail.com&quot;, &quot;password&quot;: &quot;pass&quot; }</code></td>
+<td>No</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/user/editDetails/{id}</code></td>
+<td><strong>Edits</strong> user details by ID</td>
+<td><code>PUT</code></td>
+<td><code>{ &quot;email&quot;: &quot;newemail@mail.com&quot;, &quot;phoneNumber&quot;: &quot;newnumber&quot;, &quot;userFirstName&quot;: &quot;NewFirstName&quot;, &quot;userLastName&quot;: &quot;NewLastName&quot; }</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/user/editPassword/{id}</code></td>
+<td><strong>Edits</strong> user password by ID</td>
+<td><code>PUT</code></td>
+<td><code>{ &quot;password&quot;: &quot;newpassword&quot; }</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td rowspan="5"><strong>Product</strong></td>
+<td><code>/product</code></td>
+<td><strong>Displays</strong> all products</td>
+<td><code>GET</code></td>
+<td>None</td>
+<td>No</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/product/{id}</code></td>
+<td><strong>Displays</strong> a product by ID</td>
+<td><code>GET</code></td>
+<td>None</td>
+<td>No</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/product/add</code></td>
+<td><strong>Adds</strong> a new product</td>
+<td><code>POST</code></td>
+<td><code>{ &quot;name&quot;: &quot;ProductName&quot;, &quot;description&quot;: &quot;Details&quot;, &quot;price&quot;: 100.0, &quot;discount&quot;: 10.0, &quot;category&quot;: &quot;SHIRTS&quot;, &quot;imagePath&quot;: &quot;image.jpg&quot; }</code></td>
+<td>Yes + Admin Role</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/product/edit/{id}</code></td>
+<td><strong>Edits</strong> product details by ID</td>
+<td><code>PUT</code></td>
+<td><code>{ &quot;name&quot;: &quot;NewName&quot;, &quot;description&quot;: &quot;UpdatedDetails&quot;, &quot;price&quot;: 120.0, &quot;discount&quot;: 15.0, &quot;imagePath&quot;: &quot;newImage.jpg&quot; }</code></td>
+<td>Yes + Admin Role</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/product/delete/{id}</code></td>
+<td><strong>Deletes</strong> a product by ID</td>
+<td><code>DELETE</code></td>
+<td>None</td>
+<td>Yes + Admin Role</td>
+</tr>
+<tr>
+<td rowspan="5"><strong>Address</strong></td>
+<td><code>/address</code></td>
+<td><strong>Displays</strong> all addresses</td>
+<td><code>GET</code></td>
+<td>None</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/address/{id}</code></td>
+<td><strong>Displays</strong> an address by ID</td>
+<td><code>GET</code></td>
+<td>None</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/address/add</code></td>
+<td><strong>Adds</strong> a new address</td>
+<td><code>POST</code></td>
+<td><code>{ &quot;street&quot;: &quot;123 Main St&quot;, &quot;city&quot;: &quot;SampleCity&quot;, &quot;zipCode&quot;: &quot;12345&quot;, &quot;category&quot;: &quot;HOME&quot;, &quot;isPrimary&quot;: true }</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/address/edit/{id}</code></td>
+<td><strong>Edits</strong> an address by ID</td>
+<td><code>PUT</code></td>
+<td><code>{ &quot;street&quot;: &quot;NewStreet&quot;, &quot;city&quot;: &quot;NewCity&quot;, &quot;zipCode&quot;: &quot;54321&quot;, &quot;category&quot;: &quot;WORK&quot; &quot;isPrimary&quot;: false }</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/address/delete/{id}</code></td>
+<td><strong>Deletes</strong> the user relations to the address</td>
+<td><code>DELETE</code></td>
+<td>None</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td rowspan="5"><strong>Size</strong></td>
+<td><code>/size</code></td>
+<td><strong>Displays</strong> all sizes</td>
+<td><code>GET</code></td>
+<td>None</td>
+<td>No</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/size/{id}</code></td>
+<td><strong>Displays</strong> a size by ID</td>
+<td><code>GET</code></td>
+<td>None</td>
+<td>No</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/size/add</code></td>
+<td><strong>Adds</strong> a new size</td>
+<td><code>POST</code></td>
+<td><code>{ &quot;name&quot;: &quot;XL&quot; }</code></td>
+<td>Yes + Admin Role</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/size/edit/{id}</code></td>
+<td><strong>Edits</strong> a size by ID</td>
+<td><code>PUT</code></td>
+<td><code>{ &quot;name&quot;: &quot;NewSize&quot; }</code></td>
+<td>Yes + Admin Role</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/size/delete/{id}</code></td>
+<td><strong>Deletes</strong> a size by ID</td>
+<td><code>DELETE</code></td>
+<td>None</td>
+<td>Yes + Admin Role</td>
+</tr>
+<tr>
+<td rowspan="5"><strong>Product_Inventory</strong></td>
+<td><code>/productInventory</code></td>
+<td><strong>Displays</strong> all product inventory</td>
+<td><code>GET</code></td>
+<td>None</td>
+<td>No</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/productInventory/{id}</code></td>
+<td><strong>Displays</strong> product inventory by ID</td>
+<td><code>GET</code></td>
+<td>None</td>
+<td>No</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/productInventory/add</code></td>
+<td><strong>Adds</strong> inventory for a product</td>
+<td><code>POST</code></td>
+<td><code>{ &quot;productID&quot;: 1, &quot;sizeID&quot;: 1, &quot;productQuantity&quot;: 50 }</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/productInventory/edit/{id}</code></td>
+<td><strong>Edits</strong> inventory details by ID</td>
+<td><code>PUT</code></td>
+<td><code>{ &quot;productQuantity&quot;: 60 }</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/productInventory/delete/{id}</code></td>
+<td><strong>Deletes</strong> inventory by ID</td>
+<td><code>DELETE</code></td>
+<td>None</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td rowspan="5"><strong>Order</strong></td>
+<td><code>/order</code></td>
+<td><strong>Displays</strong> all orders</td>
+<td><code>GET</code></td>
+<td>None</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/order/{id}</code></td>
+<td><strong>Displays</strong> an order by ID</td>
+<td><code>GET</code></td>
+<td>None</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/order/add</code></td>
+<td><strong>Adds</strong> a new order</td>
+<td><code>POST</code></td>
+<td><code>{ &quot;userID&quot;: 1, &quot;addressID&quot;: 1, &quot;shippingAmount&quot;: 50.0, &quot;paymentMethod&quot;: &quot;Card&quot; }</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/order/edit/{id}</code></td>
+<td><strong>Edits</strong> an order by ID</td>
+<td><code>PUT</code></td>
+<td><code>{ &quot;addressID&quot;: 2, &quot;shippingAmount&quot;: 50.0, &quot;status&quot;: &quot;Shipped&quot;, &quot;paymentMethod&quot;: &quot;Cash&quot;, &quot;dateArrived&quot;: &quot;2024-12-01T12:00:00Z&quot; }</code></td>
+<td>Yes + Admin Role</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/order/delete/{id}</code></td>
+<td><strong>Deletes</strong> an order by ID</td>
+<td><code>DELETE</code></td>
+<td>None</td>
+<td>Yes + Admin Role</td>
+</tr>
+<tr>
+<td rowspan="6"><strong>Order_Item</strong></td>
+<td><code>/orderItem/{id}</code></td>
+<td><strong>Displays</strong> order items by ID</td>
+<td><code>GET</code></td>
+<td>None</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/orderItem/invID/{id}</code></td>
+<td><strong>Displays</strong> order items by inventory ID</td>
+<td><code>GET</code></td>
+<td>None</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/orderItem/ordID/{id}</code></td>
+<td><strong>Displays</strong> order items by order ID</td>
+<td><code>GET</code></td>
+<td>None</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/orderItem/add</code></td>
+<td><strong>Adds</strong> an item to an order</td>
+<td><code>POST</code></td>
+<td><code>{ &quot;orderID&quot;: 1, &quot;inventoryID&quot;: 1, &quot;quantity&quot;: 2, &quot;priceAtPurchase&quot;: 100.0 }</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/orderItem/edit/{id}</code></td>
+<td><strong>Edits</strong> an order item by ID</td>
+<td><code>PUT</code></td>
+<td><code>{ &quot;quantity&quot;: 3, &quot;priceAtPurchase&quot;: 50.0 }</code></td>
+<td>Yes + Admin Role</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/orderItem/delete/{id}</code></td>
+<td><strong>Deletes</strong> an order item by ID</td>
+<td><code>DELETE</code></td>
+<td>None</td>
+<td>Yes + Admin Role</td>
+</tr>
+<tr>
+<td><strong>Shopping_Cart</strong></td>
+<td><code>/shoppingCart/add</code></td>
+<td><strong>Initializes</strong> a shopping cart</td>
+<td><code>POST</code></td>
+<td><code>{ &quot;userID&quot;: 1 }</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td rowspan="5"><strong>Cart_Item</strong></td>
+<td><code>/cartItem/{id}</code></td>
+<td><strong>Displays</strong> cart items by ID</td>
+<td><code>GET</code></td>
+<td>None</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/cartItem/invID/{id}</code></td>
+<td><strong>Displays</strong> cart items by inventory ID</td>
+<td><code>GET</code></td>
+<td>None</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/cartItem/add</code></td>
+<td><strong>Adds</strong> an item to a cart</td>
+<td><code>POST</code></td>
+<td><code>{ &quot;cartID&quot;: 1, &quot;inventoryID&quot;: 1, &quot;quantity&quot;: 2 }</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/cartItem/edit/{id}</code></td>
+<td><strong>Edits</strong> a cart item by ID</td>
+<td><code>PUT</code></td>
+<td><code>{ &quot;quantity&quot;: 3 }</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/cartItem/delete/{id}</code></td>
+<td><strong>Deletes</strong> a cart item by ID</td>
+<td><code>DELETE</code></td>
+<td>None</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td rowspan="5"><strong>Product_Review</strong></td>
+<td><code>/productReview/{id}</code></td>
+<td><strong>Displays</strong> a product review by ID</td>
+<td><code>GET</code></td>
+<td>None</td>
+<td>No</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/productReview/userID/{id}</code></td>
+<td><strong>Displays</strong> product reviews by user ID</td>
+<td><code>GET</code></td>
+<td>None</td>
+<td>No</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/productReview/productID/{id}</code></td>
+<td><strong>Displays</strong> product reviews by product ID</td>
+<td><code>GET</code></td>
+<td>None</td>
+<td>No</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/productReview/add</code></td>
+<td><strong>Adds</strong> a product review</td>
+<td><code>POST</code></td>
+<td><code>{ &quot;userID&quot;: 1, &quot;productID&quot;: 1, &quot;title&quot;: &quot;Review Title&quot;, &quot;description&quot;: &quot;Great product!&quot;, &quot;rating&quot;: 5 }</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td></td>
+<td><code>/productReview/delete/{id}</code></td>
+<td><strong>Deletes</strong> a product review by ID</td>
+<td><code>DELETE</code></td>
+<td>None</td>
+<td>Yes + Admin Role</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 

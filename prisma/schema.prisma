@@ -48,11 +48,9 @@ model Product_Review {
 
 enum prod_Category {
   NONE
-  SHIRTS
-  PANTS
-  ACCESSORIES
-  UNDERWEARS
-  HATS
+  BASICS
+  GRAPHICTEES
+  OVERSIZED
 }
 
 model Product {

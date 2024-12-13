@@ -54,6 +54,14 @@ const deleteOrderItem = async (itemID) => {
 const findItem = async (itemID) => {
     const item = await prisma.order_Item.findUnique({
         where: {itemID: itemID},
+        include: {
+            inventory: {
+                include: {
+                    product: true,
+                    size: true,
+                },
+            },
+        },
     });
 
     return item;
@@ -62,6 +70,14 @@ const findItem = async (itemID) => {
 const findItemsByInvID = async (inventoryID) => {
     const itemList = await prisma.order_Item.findMany({
         where: {inventoryID: inventoryID},
+        include: {
+            inventory: {
+                include: {
+                    product: true,
+                    size: true,
+                },
+            },
+        },
     });
 
     return itemList;
@@ -70,6 +86,14 @@ const findItemsByInvID = async (inventoryID) => {
 const findItemsByOrdID = async (orderID) => {
     const itemList = await prisma.order_Item.findMany({
         where: {orderID: orderID},
+        include: {
+            inventory: {
+                include: {
+                    product: true,
+                    size: true,
+                },
+            },
+        },
     });
 
     return itemList;

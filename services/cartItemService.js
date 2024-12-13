@@ -50,6 +50,14 @@ const deleteCartItem = async (itemID) => {
 const findCartItem = async (itemID) => {
     const item = await prisma.cart_Item.findUnique({
         where: {itemID: itemID},
+        include: {
+            inventory: {
+                include: {
+                    product: true,
+                    size: true,
+                },
+            },
+        },
     });
 
     return item;
@@ -58,6 +66,14 @@ const findCartItem = async (itemID) => {
 const findAllCartItemsByCartID = async (cartID) => {
     const itemList = await prisma.cart_Item.findMany({
         where: {cartID: cartID},
+        include: {
+            inventory: {
+                include: {
+                    product: true,
+                    size: true,
+                },
+            },
+        },
     });
 
     return itemList;

@@ -16,6 +16,27 @@ const createShoppingCart = async (userID) => {
     return cart;
 };
 
+const findShoppingCartWithItems = async (userID) => {
+    const cart = await prisma.shopping_Cart.findUnique({
+        where: { userID: userID },
+        include: {
+            cart_Items: {
+                include: {
+                    inventory: {
+                        include: {
+                            product: true,
+                            size: true,
+                        },
+                    },
+                },
+            },
+        }
+    });
+
+    return cart;
+};
+
 module.exports = {
     createShoppingCart,
+    findShoppingCartWithItems,
 }

@@ -2,9 +2,9 @@ const cartItemService = require("../services/cartItemService");
 const { handleValidationError } = require("../utils/errorUtils");
 
 const addCartItemController = async (req, res) => {
-    const { cartID, inventoryID, quantity } = req.body;
+    const { cartID, productID, sizeID, quantity } = req.body;
 
-    if (!cartID || !Number.isInteger(cartID) || !inventoryID || !Number.isInteger(inventoryID)) {
+    if (!cartID || !Number.isInteger(cartID) || !productID || !Number.isInteger(productID) || !sizeID || !Number.isInteger(sizeID)) {
         return handleValidationError(res, 400, "Invalid cart ID or inventory ID");
     }
 

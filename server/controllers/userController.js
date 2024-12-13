@@ -86,6 +86,7 @@ const updatePasswordController = async (req, res) => {
 
 const getDetailsController = async (req, res) => {
     const userID = parseInt(req.params.id, 10);
+    
 
     if (!userID || !Number.isInteger(userID)) {
         return handleValidationError(res, 401, "Invalid user ID");
@@ -101,10 +102,28 @@ const getDetailsController = async (req, res) => {
     res.json(user);
 };
 
+const getPublicDetailsController = async (req, res) => {
+    const userID = req.user.id;
+
+    if (!userID || !Number.isInteger(userID)) {
+        return handleValidationError(res, 401, "Invalid user ID");
+    }
+
+
+    const user = await userService.findUser(userID);
+
+    if (!user) {
+        return handleValidationError(res, 404, "User not found");
+    }
+
+    res.json(user);
+}
+
 module.exports = {
     registerController,
     loginController,
     updateDetailsController,
     updatePasswordController,
     getDetailsController,
+    getPublicDetailsController,
 };

@@ -31,5 +31,5 @@ const findShoppingCartWithItemsController = async (req, res) => {
 
 module.exports = {
     addShoppingCartController,
-    findShoppingCartWithItemsController
+    findShoppingCartWithItemsController,
 }

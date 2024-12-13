@@ -9,7 +9,7 @@ const validateToken = (req, res, next) => {
 
     try {
         const secretKey = process.env.JWT_SECRET || "defaultSecret"; 
-        req.user = jwt.verify(token, secretKey); 
+        req.user = jwt.verify(token, secretKey);
         next(); 
     } catch (error) {
         console.error("Token validation error:", error.message);

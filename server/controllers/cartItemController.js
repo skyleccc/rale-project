@@ -12,7 +12,7 @@ const addCartItemController = async (req, res) => {
         return handleValidationError(res, 400, "Invalid quantity");
     }
 
-    const item = await cartItemService.createCartItem({ cartID, inventoryID, quantity });
+    const item = await cartItemService.createCartItem({ cartID, productID, sizeID, quantity });
 
     res.json(item);
 }

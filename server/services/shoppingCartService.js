@@ -17,7 +17,7 @@ const createShoppingCart = async (userID) => {
 };
 
 const findShoppingCartWithItems = async (userID) => {
-    const cart = await prisma.shopping_Cart.findUnique({
+    const cart = await prisma.shopping_Cart.findMany({
         where: { userID: userID },
         include: {
             cart_Items: {
@@ -35,6 +35,8 @@ const findShoppingCartWithItems = async (userID) => {
 
     return cart;
 };
+
+
 
 module.exports = {
     createShoppingCart,

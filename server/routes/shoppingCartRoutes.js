@@ -6,6 +6,6 @@ const validateToken = require("../middleware/authenticateToken");
 const asyncHandler = require("../utils/asyncHandler");
 
 router.post("/add", validateToken, asyncHandler(shoppingCartController.addShoppingCartController));
-router.post("/find", validateToken, asyncHandler(shoppingCartController.findShoppingCartWithItemsController));
+router.get("/find", validateToken, asyncHandler(shoppingCartController.findShoppingCartWithItemsController));
 
 module.exports = router;

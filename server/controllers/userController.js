@@ -40,7 +40,6 @@ const loginController = async (req, res) => {
 const updateDetailsController = async (req, res) => {
     const { email, username, userFirstName, userLastName, phoneNumber } = req.body;
     const userID = req.user.id;
-
     if (!userID || !Number.isInteger(userID)) {
         return handleValidationError(res, 401, "Invalid user ID");
     }
@@ -49,11 +48,11 @@ const updateDetailsController = async (req, res) => {
         return handleValidationError(res, 400, "All fields are required");
     }
 
-    const existingUser = await checkExisting({email, username});
+    // const existingUser = await checkExisting({email, username});
 
-    if (existingUser) {
-        return handleValidationError(res, 409, "Email or Username already exists");
-    }
+    // if (existingUser) {
+    //     return handleValidationError(res, 409, "Email or Username already exists");
+    // }
 
     const updatedUser = await userService.updateUserDetails({ userID, email, username, userFirstName, userLastName, phoneNumber });
 

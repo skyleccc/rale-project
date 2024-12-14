@@ -25,13 +25,13 @@ const createUser = async ({ email, username, password, userFirstName, userLastNa
     return user;
 };
 
-const updateUserDetails = async ({ id, email, username, userFirstName, userLastName, phoneNumber }) => {
-    const find = await findUser(id);
+const updateUserDetails = async ({ userID, email, username, userFirstName, userLastName, phoneNumber }) => {
+    const find = await findUser(userID);
     
     if(!find) return null;
 
     const updatedUser = await prisma.user.update({
-        where: { userID: id },
+        where: { userID: userID },
         data: {
             email: email,
             username: username,
@@ -40,7 +40,7 @@ const updateUserDetails = async ({ id, email, username, userFirstName, userLastN
             phoneNumber: phoneNumber,
         },
     });
-
+    
     return updatedUser;
 };
 

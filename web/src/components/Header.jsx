@@ -4,12 +4,13 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Header() {
   const location = useLocation();
+  const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  
+
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
-    setIsAuthenticated(!!storedToken);
+    setIsAuthenticated(!!storedToken);  // Check if user is authenticated
   }, []);
 
   const [showSearch, setShowSearch] = useState(false);
@@ -17,10 +18,10 @@ function Header() {
 
   const handleAuthAction = () => {
     if (isAuthenticated) {
-      // localStorage.removeItem('token');
-      // setIsAuthenticated(false);
+      localStorage.removeItem('token');
+      setIsAuthenticated(false);
       navigate("/frontPage");
-    }else{
+    } else {
       navigate("/loginPage");
     }
     setShowDropdown(false);
@@ -29,7 +30,7 @@ function Header() {
   const toggleSearchBar = () => {
     setShowSearch(!showSearch);
   };
-  
+
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
@@ -72,6 +73,15 @@ function Header() {
     }
   };
 
+  // Handle Profile button click to navigate to login if user is not authenticated
+  const handleProfileClick = () => {
+    if (isAuthenticated) {
+      navigate(`/accountPage/${userId}`);  // Navigate to profile page if authenticated
+    } else {
+      navigate("/loginPage");  // Navigate to login page if not authenticated
+    }
+  };
+
   return (
     <div className="w-full z-50">
       <header className="bg-[#f4f2f2] flex justify-between items-center w-[100vw] p-6 h-2 sm:h-[2vw] md:h-[3vw] lg:h-[4vw] xl:h-[4vw] 2xl:h-[5vw] ">
@@ -92,7 +102,6 @@ function Header() {
         </div>
 
         <div className="flex items-center space-x-4 z-50">
-          
           <div className="relative">
             {showSearch && (
               <div
@@ -113,6 +122,7 @@ function Header() {
               shopping_bag
             </span>
           </Link>
+
           <div className="relative">
             <span 
               onClick={toggleDropdown}
@@ -123,13 +133,12 @@ function Header() {
             
             {showDropdown && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-                <Link to="/accountPage">
-                  <button 
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
-                  >
-                    Profile
-                  </button>
-                </Link>
+                <button 
+                  onClick={handleProfileClick}
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                >
+                  Profile
+                </button>
                 <button 
                   className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                   onClick={handleAuthAction}

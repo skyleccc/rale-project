@@ -27,13 +27,14 @@ const loginController = async (req, res) => {
         return handleValidationError(res, 400, "Email is required");
     }
 
-    const token = await userService.loginUser(email);
+    const { token, userId } = await userService.loginUser(email);
 
-    if (!token) {
+    if (!token || !userId) {
         return handleValidationError(res, 401, "Invalid email");
     }
 
-    res.json({ token });
+    // Send both token and userId to the frontend
+    res.json({ token, userId });
 };
 
 const updateDetailsController = async (req, res) => {

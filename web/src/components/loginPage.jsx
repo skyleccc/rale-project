@@ -31,6 +31,7 @@ function LoginPage() {
 
             if (response.status === 200) {
                 localStorage.setItem('token', response.data.token);
+                localStorage.setItem('userId',response.data.userId);
                 navigate('/frontPage');
             } else {
                 setError('Login failed: ' + response.data.message);

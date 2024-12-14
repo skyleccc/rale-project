@@ -65,6 +65,7 @@ const findUser = async (id) => {
             email: true,
             userFirstName: true,
             userLastName: true,
+            username: true,
             phoneNumber: true,
             role: true,
         },
@@ -75,20 +76,20 @@ const findUser = async (id) => {
 };
 
 const loginUser = async (email) => {
-
     const user = await prisma.user.findUnique({
         where: { email: email },
     });
 
     if (!user) return null;
-    
+
     const token = jsonwebtoken.sign(
         { id: user.userID, role: user.role },
         process.env.JWT_SECRET || "defaultSecret",
         { expiresIn: "24h" }
     );
 
-    return token;
+    // Return both the token and userId
+    return { token, userId: user.userID };
 };
 
 const checkUniqueUser = async ({email, username}) => {

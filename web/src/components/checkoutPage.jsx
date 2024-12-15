@@ -6,6 +6,10 @@ function CheckoutPage() {
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [checkoutError, setCheckoutError] = useState(null);
+    const [checkoutSuccess, setCheckoutSuccess] = useState(null);
+    const userId = localStorage.getItem("userId");
+    const addressId = localStorage.getItem("addressID");
 
     useEffect(() => {
         const fetchCartItems = async () => {
@@ -20,8 +24,8 @@ function CheckoutPage() {
                 });
 
                 const cart = response.data;
-                console.log(cart);
                 setCartItems(cart.items);
+                console.log('Cart items:', cart.items);
             } catch (err) {
                 setError(err.message);
                 console.error('Error fetching cart items:', err);
@@ -90,6 +94,67 @@ function CheckoutPage() {
             setCartItems(prevItems => prevItems.filter(item => item.itemID !== itemId));
         } catch (err) {
             console.error('Error deleting item:', err);
+        }
+    };
+
+    const checkout = async () => {
+        if (!userId || !addressId) {
+            setCheckoutError("Invalid userId or addressId");
+            return;
+        }
+
+        try {
+            const localToken = localStorage.getItem('token');
+            console.log('userId:', userId);
+            console.log('addressId:', addressId);
+            console.log('token:', localToken);
+            const shippingAmount = 50.0; // Replace with actual shipping amount
+            const paymentMethod = "Cash"; // Replace with actual payment method
+
+            const orderResponse = await axios.post(`http://localhost:8590/order/add`, {
+                userID: parseInt(userId,10),
+                addressID: parseInt(addressId,10),
+                isPaid: false,
+                shippingAmount: shippingAmount,
+                paymentMethod: paymentMethod
+            }, {
+                headers: {
+                    'Authorization': `${localToken}`,
+                }
+            });
+
+            const orderID = orderResponse.data.orderID;
+            
+            for (const item of cartItems) {
+                console.log({
+                    orderID: orderID,
+                    inventoryID: item.inventory.inventoryID,
+                    quantity: item.quantity,
+                    priceAtPurchase: item.inventory.product.price
+                });
+                await axios.post(`http://localhost:8590/orderItem/add`, {
+                    orderID: orderID,
+                    inventoryID: item.inventory.inventoryID,
+                    quantity: item.quantity,
+                    priceAtPurchase: parseFloat(item.inventory.product.price)
+                }, {
+                    headers: {
+                        'Authorization': `${localToken}`,
+                    }
+                });
+
+                await axios.delete(`http://localhost:8590/cartItem/delete/${item.itemID}`, {
+                    headers: {
+                        'Authorization': `${localToken}`,
+                    }
+                });
+            }
+
+            setCheckoutSuccess("Checkout successful!");
+            setCartItems([]);
+        } catch (err) {
+            console.error('Error during checkout:', err);
+            setCheckoutError(err.response?.data?.message || "Checkout failed");
         }
     };
 
@@ -181,8 +246,19 @@ function CheckoutPage() {
                         <div className="text-xl my-auto">Total Cost: </div>
                         <div className="text-6xl my-auto">₱{totalCost}</div>
                     </div>
-                    <button onClick={handleButtonClick} className="bg-gray-200 w-[18vw] my-auto grid justify-items-center p-3 text-2xl rounded-xl">Checkout</button>
+                    <button onClick={checkout} className="bg-gray-200 w-[18vw] my-auto grid justify-items-center p-3 text-2xl rounded-xl">Checkout</button>
                 </div>
+
+                {checkoutError && (
+                    <div className="text-red-500 text-center mt-2">
+                        {checkoutError}
+                    </div>
+                )}
+                {checkoutSuccess && (
+                    <div className="text-green-500 text-center mt-2">
+                        {checkoutSuccess}
+                    </div>
+                )}
             </div>
         </div>
     );

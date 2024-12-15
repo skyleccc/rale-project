@@ -12,7 +12,7 @@ function ProductPage() {
     const [selectedSize, setSelectedSize] = useState(null);
     const [addingToCart, setAddingToCart] = useState(false);
     const [cartError, setCartError] = useState(null);
-    const [cartId, setCartId] = useState({});
+    const [cartDetails, setcartDetails] = useState({});
 
     // Assuming your store has a method to get recommended products
     const { getRecommendedProducts } = useShopStore();
@@ -33,13 +33,11 @@ function ProductPage() {
             try {
                 // Get user ID from localStorage or auth system
                 const localToken = localStorage.getItem('token');
-                const getUserResponse = await axios.get(`http://localhost:8590/user/validateUser`, {
+                const getUserResponse = await axios.get(`http://localhost:8590/user/validate/user`, {
                     headers: {
                         'Authorization': `${localToken}`,
                     }
                 });
-
-                console.log(getUserResponse);
 
                 if(getUserResponse.status === 200){
                     const getCartResponse = await axios.get(`http://localhost:8590/shoppingCart/find`, {
@@ -49,7 +47,8 @@ function ProductPage() {
                     });
                  
                     if(getCartResponse.status === 200){
-                        setCartId(getCartResponse);
+                        setcartDetails(getCartResponse.data);
+                        console.log(getCartResponse.data);
                     }
                 }
             } catch (err) {
@@ -71,7 +70,7 @@ function ProductPage() {
 
         fetchUserData();
         fetchProductDetails();
-    }, [productId, cartId]);
+    }, [productId]);
 
     const handleAddToCart = async () => {
         if (!selectedSize) {
@@ -82,17 +81,43 @@ function ProductPage() {
         try {
             setAddingToCart(true);
             setCartError(null);
-            console.log(cartId);
-            await axios.post(`http://localhost:8590/cartItem/add`, {
-                cartID: cartId,
-                productId: selectedProduct.id,
-                size: sizeMapping[selectedSize],
-                quantity: 1, // You can add quantity selection if needed
-            }, {
-                headers: {
-                    Authorization: `${localToken}`
-                }
-            });
+
+            if (!cartDetails || !cartDetails.items) {
+                throw new Error("Cart details not loaded");
+            }
+
+            const existingItem = cartDetails.items.find(item => 
+                item.inventory.productID === selectedProduct.productID && 
+                item.inventory.sizeID === sizeMapping[selectedSize]
+            );
+
+            const localToken = localStorage.getItem('token');
+
+            if (existingItem) {
+                console.log(existingItem.itemID);
+                // Increment quantity if item already exists
+                await axios.put(`http://localhost:8590/cartItem/edit/${existingItem.itemID}`, {
+                    quantity: existingItem.quantity + 1,
+                }, {
+                    headers: {
+                        'Authorization': `${localToken}`,
+                    }
+                });
+                console.log("Product already in cart. Quantity increased.");
+            } else {
+                // Add new item to cart
+                await axios.post(`http://localhost:8590/cartItem/add`, {
+                    cartID: cartDetails.cartID,
+                    productID: selectedProduct.productID,
+                    sizeID: sizeMapping[selectedSize],
+                    quantity: 1, // You can add quantity selection if needed
+                }, {
+                    headers: {
+                        'Authorization': `${localToken}`,
+                    }
+                });
+                console.log("Product added to cart.");
+            }
 
             // Optional: Show success message or trigger cart update
             // You could add a toast notification here

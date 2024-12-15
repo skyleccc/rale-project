@@ -11,6 +11,6 @@ router.post("/register", asyncHandler(userController.registerController));
 router.put("/editDetails/:id", validateToken, asyncHandler(userController.updateDetailsController));
 router.put("/editPassword/:id", validateToken, validatePassword, asyncHandler(userController.updatePasswordController));
 router.get("/:id", validateToken, asyncHandler(userController.getDetailsController));
-router.get("/validateUser", validateToken, asyncHandler(userController.getPublicDetailsController));
+router.get("/validate/user", validateToken, asyncHandler(userController.getPublicDetailsController));
 
 module.exports = router;

@@ -17,10 +17,10 @@ const createShoppingCart = async (userID) => {
 };
 
 const findShoppingCartWithItems = async (userID) => {
-    const cart = await prisma.shopping_Cart.findMany({
+    const cartList = await prisma.shopping_Cart.findFirst({
         where: { userID: userID },
         include: {
-            cart_Items: {
+            items: {
                 include: {
                     inventory: {
                         include: {
@@ -33,7 +33,7 @@ const findShoppingCartWithItems = async (userID) => {
         }
     });
 
-    return cart;
+    return cartList;
 };
 
 

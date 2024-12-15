@@ -20,7 +20,7 @@ const findShoppingCartWithItemsController = async (req, res) => {
         return handleValidationError(res, 401, "Invalid user ID");
     }
     
-    const cart = shoppingCartService.findShoppingCart(userID);
+    const cart = await shoppingCartService.findShoppingCartWithItems(userID);
 
     if(!cart){
         return handleValidationError(res, 404, "Cart not found");

@@ -4,6 +4,8 @@ const { handleValidationError } = require("../utils/errorUtils");
 const addCartItemController = async (req, res) => {
     const { cartID, productID, sizeID, quantity } = req.body;
 
+    console.log({ cartID, productID, sizeID, quantity });
+
     if (!cartID || !Number.isInteger(cartID) || !productID || !Number.isInteger(productID) || !sizeID || !Number.isInteger(sizeID)) {
         return handleValidationError(res, 400, "Invalid cart ID or inventory ID");
     }
@@ -18,7 +20,8 @@ const addCartItemController = async (req, res) => {
 }
 
 const editCartItemController = async (req, res) => {
-    const { itemID, quantity } = req.body;
+    const { quantity } = req.body;
+    const itemID = parseInt(req.params.id, 10);
 
     if (!itemID || !Number.isInteger(itemID)) {
         return handleValidationError(res, 400, "Invalid cart ID");
@@ -38,7 +41,7 @@ const editCartItemController = async (req, res) => {
 };
 
 const deleteCartItemController = async (req, res) => {
-    const {itemID} = req.body;
+    const itemID = parseInt(req.params.id, 10);
 
     if(!itemID || !Number.isInteger(itemID)){
         return handleValidationError(res, 400, "Invalid item ID");
@@ -54,7 +57,7 @@ const deleteCartItemController = async (req, res) => {
 };
 
 const findCartItemController = async (req, res) => {
-    const {itemID} = req.body;
+    const itemID = parseInt(req.params.id, 10);
 
     if(!itemID || !Number.isInteger(itemID)){
         return handleValidationError(res, 400, "Invalid item ID");
@@ -70,7 +73,7 @@ const findCartItemController = async (req, res) => {
 };
 
 const findAllCartItemsByCartIDController = async (req, res) => {
-    const {cartID} = req.body;
+    const cartID = parseInt(req.params.id, 10);
 
     if(!cartID || !Number.isInteger(cartID)){
         return handleValidationError(res, 400, "Invalid cart ID");

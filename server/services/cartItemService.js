@@ -3,6 +3,7 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient;
 
 const createCartItem = async ({ cartID, productID, sizeID, quantity }) => {
+
     const inventory = await findInventory({ productID, sizeID });
 
     if (!inventory) return null;
@@ -84,14 +85,14 @@ const findAllCartItemsByCartID = async (cartID) => {
 };
 
 const findInventory = async ({ productID, sizeID }) => {
-    const inventory = await prisma.inventory.findUnique({
+    const inventory = await prisma.product_Inventory.findFirst({
         where: {
             productID: productID,
             sizeID: sizeID,
         },
     });
 
-    return inventory;
+    return inventory ? inventory : null;
 };
 
 module.exports = {

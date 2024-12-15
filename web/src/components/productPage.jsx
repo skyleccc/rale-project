@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import useShopStore from './shopStore';
 import Header from "./Header"; // Adjust path as needed
 
 function ProductPage() {
     const { productId } = useParams();
+    const navigate = useNavigate();
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -28,11 +29,16 @@ function ProductPage() {
     };
 
     useEffect(() => {
+        
         console.log("Product ID:", productId);
         const fetchUserData = async () => {
             try {
                 // Get user ID from localStorage or auth system
                 const localToken = localStorage.getItem('token');
+                if (!localToken) {
+                    return;
+                }
+
                 const getUserResponse = await axios.get(`http://localhost:8590/user/validate/user`, {
                     headers: {
                         'Authorization': `${localToken}`,
@@ -78,6 +84,12 @@ function ProductPage() {
             return;
         }
         
+        const localToken = localStorage.getItem('token');
+        if (!localToken) {
+            navigate('/loginPage');
+            return;
+        }
+
         try {
             setAddingToCart(true);
             setCartError(null);
@@ -90,8 +102,6 @@ function ProductPage() {
                 item.inventory.productID === selectedProduct.productID && 
                 item.inventory.sizeID === sizeMapping[selectedSize]
             );
-
-            const localToken = localStorage.getItem('token');
 
             if (existingItem) {
                 console.log(existingItem.itemID);

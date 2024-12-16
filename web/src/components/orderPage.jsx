@@ -92,7 +92,7 @@ function OrderPage() {
                                                 <img
                                                     src={item.inventory.product.imagePath}
                                                     alt={item.inventory.product.name}
-                                                    className="w-full h-32 object-cover rounded-md mb-2"
+                                                    className="w-32 h-32 object-cover mx-auto drop-shadow-xl rounded-md mb-2"
                                                 />
                                                 <h4 className="font-bold text-sm md:text-lg">
                                                     {item.inventory.product.name}

@@ -325,7 +325,7 @@ function AccountPage() {
                             {!isEditing ? (
                                 <button
                                     onClick={() => setIsEditing(true)}
-                                    className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition w-1/2 md:w-1/6 sm:w-auto"
+                                    className="flex items-center gap-2 bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition w-1/2 md:w-1/6 sm:w-auto"
                                 >
                                     Edit Profile
                                 </button>
@@ -423,7 +423,7 @@ function AccountPage() {
                             <div className="font-bold text-2xl sm:text-3xl">Stored Addresses</div> {/* Adjusted text size for mobile */}
                             <button
                                 onClick={openModal}
-                                className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition w-1/2 md:w-1/6 sm:w-auto"
+                                className="flex items-center gap-2 bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition w-1/2 md:w-1/6 sm:w-auto"
                             >
                                 Add Address
                             </button>
@@ -442,7 +442,7 @@ function AccountPage() {
                                     {!address.isPrimary && (
                                         <button
                                             onClick={() => handleSetPrimaryAddress(address.addressID)}
-                                            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition w-full sm:w-auto"
+                                            className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition w-full sm:w-auto"
                                         >
                                             Set as Primary
                                         </button>

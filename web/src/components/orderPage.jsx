@@ -59,10 +59,10 @@ function OrderPage() {
                                 <p className="text-gray-600 mb-2">Status: {order.status}</p>
                                 <p className="text-gray-600 mb-2">Payment Method: {order.paymentMethod}</p>
                                 <p className="text-gray-600 mb-2">
-                                    Shipping Amount: ${parseFloat(order.shippingAmount).toFixed(2)}
+                                    Shipping Amount: ₱{parseFloat(order.shippingAmount).toFixed(2)}
                                 </p>
                                 <p className="text-gray-600 mb-2">
-                                    Total: $
+                                    Total: ₱
                                     {order.items
                                         .reduce(
                                             (total, item) =>
@@ -98,13 +98,13 @@ function OrderPage() {
                                                     {item.inventory.product.name}
                                                 </h4>
                                                 <p className="text-gray-600 text-sm">
-                                                    Price: ${parseFloat(item.priceAtPurchase).toFixed(2)}
+                                                    Price: ₱{parseFloat(item.priceAtPurchase).toFixed(2)}
                                                 </p>
                                                 <p className="text-gray-600 text-sm">
                                                     Quantity: {item.quantity}
                                                 </p>
                                                 <p className="text-gray-600 text-sm">
-                                                    Total: $
+                                                    Total: ₱
                                                     {(parseFloat(item.priceAtPurchase) * item.quantity).toFixed(2)}
                                                 </p>
                                             </div>

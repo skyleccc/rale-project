@@ -143,9 +143,9 @@ function ProductPage() {
     if (!selectedProduct) return <div className="flex justify-center items-center h-screen">Product not found</div>;
 
     return (
-        <div>
+        <div className="bg-gray-200">
             <Header />
-            <div className="w-full h-auto bg-gray-200 p-4 md:p-10">
+            <div className="w-full h-screen bg-gray-200 p-4 md:p-10">
                 <div className="bg-white rounded-2xl">
                     <div className="p-3">
                         <div className="flex flex-col md:flex-row gap-4 md:gap-4">
@@ -174,7 +174,8 @@ function ProductPage() {
     
                             <div className="hidden md:block bg-gray-400 w-[0.2vw] h-auto" />
     
-                            <div className="flex flex-col py-4 md:py-10">
+                            <div className="flex flex-col py-4 md:py-10 w-full md:w-1/2 ">
+                                <div className="my-auto">
                                 <div className="text-lg md:text-2xl text-gray-500">{selectedProduct.category}</div>
                                 <div className="text-3xl md:text-6xl text-black">{selectedProduct.name}</div>
     
@@ -194,11 +195,11 @@ function ProductPage() {
     
                                 <div className="text-2xl md:text-5xl text-gray-400 italic">₱{selectedProduct.price}.00</div>
     
-                                <div className="w-full md:w-5/6 p-2 md:p-3 flex flex-wrap gap-2 justify-center md:justify-between">
+                                <div className="w-full md:w-full p-2 md:p-3 flex flex-wrap gap-2 justify-center md:justify-between">
                                     {Object.keys(sizeMapping).map((size) => (
                                         <div 
                                             key={size}
-                                            className={`text-base md:text-3xl p-2 w-[12vw] h-[12vw] md:w-[3.5vw] md:h-[3.54vw] grid justify-items-center rounded-lg cursor-pointer transition-colors ${
+                                            className={`text-base md:text-3xl p-2 w-[11vw] h-[12vw] md:w-[4vw] md:h-[3.54vw] grid justify-items-center rounded-lg cursor-pointer transition-colors ${
                                                 selectedSize === size 
                                                     ? 'bg-gray-600 text-white' 
                                                     : 'bg-gray-400 text-white hover:bg-gray-500'
@@ -233,6 +234,7 @@ function ProductPage() {
                                     </button>
                                 </div>
                             </div>
+                                </div>
                         </div>
                     </div>
                 </div>

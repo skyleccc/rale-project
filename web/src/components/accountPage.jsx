@@ -438,7 +438,7 @@ function AccountPage() {
                                     <div>{address.country}</div>
                                     <div>{address.category}</div>
                                 </div>
-                                <div className="flex gap-2">
+                                <div className="flex flex-col md:flex-row gap-2">
                                     {!address.isPrimary && (
                                         <button
                                             onClick={() => handleSetPrimaryAddress(address.addressID)}

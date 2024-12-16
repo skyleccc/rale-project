@@ -228,7 +228,7 @@ function CheckoutPage() {
                                     </button>
                                     <div className="w-full md:w-1/2 flex flex-row gap-2">
                                         <div className="relative w-[20vw] md:w-[12vw]">
-                                            <img src={item.inventory.product.imagePath} alt={item.inventory.product.name} className="absolute p-2 md:p-3 rounded-lg md:rounded-3xl z-1 drop-shadow-lg w-full h-full object-cover" />
+                                            <img src={item.inventory.product.imagePath} alt={item.inventory.product.name} className="absolute p-2 md:p-3 rounded-lg md:rounded-3xl z-1 drop-shadow-lg w-full h-[9] md:h-full object-cover" />
                                             <div className="bg-white w-[20vw] md:w-[12vw] h-[20vw] md:h-[12vw] rounded-lg md:rounded-xl"></div>
                                         </div>
                                         <div className="my-auto">

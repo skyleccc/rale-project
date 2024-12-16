@@ -112,65 +112,70 @@ function RegisterPage() {
   };
 
   return (
-    <div className="w-full h-screen overflow-hidden fixed">
+    <div className="w-full h-screen">
       <div className="relative bg-white p-10 w-full h-full">
-        <div className="absolute font-bold font-archivo-black text-[12vw] tracking-tighter text-gray-200"
+        <div
+          className="absolute font-bold font-archivo-black text-[12vw] tracking-tighter text-gray-200"
           style={{
             top: "15%",
             left: "49%",
             transform: "translate(-50%, -50%) scaleX(1.4)",
             whiteSpace: "nowrap",
-          }}>
+          }}
+        >
           REGISTER
         </div>
         <form onSubmit={handleSubmit}>
           <div className="bg-gray-200 z-10 flex flex-col p-5 mx-[10%] gap-4 rounded-2xl relative top-[16vh] h-auto">
             <div className="text-3xl font-bold mx-auto">CREATE A NEW ACCOUNT</div>
-            
+  
+            {/* First Name */}
             <div>
               <div className="text-lg font-semibold">First Name</div>
-              <input 
-                type="text" 
-                placeholder="First Name" 
+              <input
+                type="text"
+                placeholder="First Name"
                 name="userFirstName"
                 value={userForm.userFirstName}
-                onChange={handleChanges} 
+                onChange={handleChanges}
                 className={`p-2 w-full rounded-xl ${errors.userFirstName ? 'border-red-500' : ''}`}
               />
               {errors.userFirstName && <span className="text-red-500 text-sm">{errors.userFirstName}</span>}
             </div>
-
+  
+            {/* Last Name */}
             <div>
               <div className="text-lg font-semibold">Last Name</div>
-              <input 
-                type="text" 
-                placeholder="Last Name" 
+              <input
+                type="text"
+                placeholder="Last Name"
                 name="userLastName"
                 value={userForm.userLastName}
-                onChange={handleChanges} 
+                onChange={handleChanges}
                 className={`p-2 w-full rounded-xl ${errors.userLastName ? 'border-red-500' : ''}`}
               />
               {errors.userLastName && <span className="text-red-500 text-sm">{errors.userLastName}</span>}
             </div>
-
-            <div className="flex flex-row w-full gap-7">
-              <div className="w-1/2">
+  
+            {/* Username and Password (Responsive) */}
+            <div className="flex flex-col sm:flex-row w-full gap-7">
+              <div className="w-full sm:w-1/2">
                 <div className="text-lg font-semibold">Username</div>
-                <input 
-                  type="text" 
-                  placeholder="Username" 
+                <input
+                  type="text"
+                  placeholder="Username"
                   name="username"
                   value={userForm.username}
-                  onChange={handleChanges} 
+                  onChange={handleChanges}
                   className={`p-2 w-full rounded-xl ${errors.username ? 'border-red-500' : ''}`}
                 />
                 {errors.username && <span className="text-red-500 text-sm">{errors.username}</span>}
               </div>
-
-              <div className="w-1/2">
+  
+              <div className="w-full sm:w-1/2">
                 <div className="text-lg font-semibold">Password</div>
                 <div className="relative">
-                  <input 
+                  <input
                     type={showPassword ? "text" : "password"}
                     placeholder="Password"
                     name="password"
@@ -189,49 +194,56 @@ function RegisterPage() {
                 {errors.password && <span className="text-red-500 text-sm">{errors.password}</span>}
               </div>
             </div>
-
-            <div className="flex flex-row w-full gap-7">
-              <div className="w-1/2">
+  
+            {/* Email Address and Phone Number (Responsive) */}
+            <div className="flex flex-col sm:flex-row w-full gap-7">
+              <div className="w-full sm:w-1/2">
                 <div className="text-lg font-semibold">Email Address</div>
-                <input 
-                  type="email" 
-                  placeholder="Email Address" 
+                <input
+                  type="email"
+                  placeholder="Email Address"
                   name="email"
                   value={userForm.email}
-                  onChange={handleChanges} 
+                  onChange={handleChanges}
                   className={`p-2 w-full rounded-xl ${errors.email ? 'border-red-500' : ''}`}
                 />
                 {errors.email && <span className="text-red-500 text-sm">{errors.email}</span>}
               </div>
-
-              <div className="w-1/2">
+  
+              <div className="w-full sm:w-1/2">
                 <div className="text-lg font-semibold">Phone Number</div>
-                <input 
-                  type="tel" 
-                  placeholder="Phone Number" 
+                <input
+                  type="tel"
+                  placeholder="Phone Number"
                   name="phonenumber"
                   value={userForm.phonenumber}
-                  onChange={handleChanges} 
+                  onChange={handleChanges}
                   className={`p-2 w-full rounded-xl ${errors.phonenumber ? 'border-red-500' : ''}`}
                 />
                 {errors.phonenumber && <span className="text-red-500 text-sm">{errors.phonenumber}</span>}
               </div>
             </div>
-
+  
+            {/* Submit Error */}
             {errors.submit && (
               <div className="text-red-500 text-center mt-4">{errors.submit}</div>
             )}
-
-            <button 
-              type="submit" 
-              className="bg-gray-300 z-10 my-2 p-3 grid justify-items-center gap-2 rounded-2xl w-1/3 mx-auto relative h-auto hover:bg-gray-400 transition-colors"
+  
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="bg-gray-300 z-10 my-2 p-3 grid justify-items-center gap-2 rounded-2xl w-full md:w-1/3 mx-auto relative h-auto hover:bg-gray-400 transition-colors"
             >
               <div className="text-2xl">REGISTER</div>
             </button>
-            
-            <div className="w-full relative mx-auto grid justify-items-center">
-              <div>Already Have an Account?
-                <Link to="/loginPage" className="text-sky-600"> Sign In</Link>
+  
+            {/* Already have an Account Link */}
+            <div className="w-full relative left-7 md:left-0 mx-auto grid justify-items-center">
+              <div>
+                Already Have an Account?{" "}
+                <Link to="/loginPage" className="text-sky-600">
+                  Sign In
+                </Link>
               </div>
             </div>
           </div>
@@ -239,6 +251,7 @@ function RegisterPage() {
       </div>
     </div>
   );
+  
 }
 
 export default RegisterPage;

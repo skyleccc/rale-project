@@ -21,7 +21,7 @@ function Navbar() {
         className="absolute w-[9vw] top-[3.5%] left-[88.3%] m-[10px] z-0"
       />
 
-      <div className="relative z-10 w-full h-screen">
+      <div className="relative z-10 w-full h-[90vh]">
         <div className="font-dela-gothic-one text-[14vw] font-normal absolute top-[-50%] left-[48%] text-white tracking-[-30px] drop-shadow-lg hidden sm:block">
           WEAR
         </div>

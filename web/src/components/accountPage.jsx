@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 function AccountPage() {
-    const { userId } = useParams();
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -33,7 +32,7 @@ function AccountPage() {
                 const token = localStorage.getItem("token");
                 if (!token) throw new Error("Unauthorized");
 
-                const response = await axios.get(`http://localhost:8590/user/${userId}`, {
+                const response = await axios.get(`http://localhost:8590/user/validate/user`, {
                     headers: { Authorization: `${token}` },
                 });
 
@@ -55,7 +54,7 @@ function AccountPage() {
         };
 
         fetchUserData();
-    }, [userId]);
+    }, []);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -271,7 +270,7 @@ function AccountPage() {
             const token = localStorage.getItem("token");
             if (!token) throw new Error("Unauthorized");
 
-            await axios.put(`http://localhost:8590/user/editPassword/${userId}`, {
+            await axios.put(`http://localhost:8590/user/editPassword/${userData.userID}`, {
                 email: userData.email,
                 password: passwordData.currentPassword,
                 newPassword: passwordData.newPassword,

@@ -185,7 +185,7 @@ function ProductPage() {
                                         <span key={i} className="material-symbols-outlined text-4xl">star_rate</span>
                                     ))}
                                     <div className="text-gray-300 text-xl py-1">
-                                        {selectedProduct.ratings} Ratings | {selectedProduct.sold} Sold
+                                        {selectedProduct.ratings && "/5" || "No"} Ratings | {selectedProduct.sold} Sold
                                     </div>
                                 </div>
 
@@ -237,27 +237,7 @@ function ProductPage() {
                     </div>
                 </div>
 
-                {/* Recommended Products */}
-                <div className=" bg-white z-1 rounded-2xl my-4 p-4">
-                    <div className=" text-3xl float-left">Recommended For You</div>
-
-                    <div className="p-5 relative">   
-
-                        <div className="relative p-3 rounded-xl border-2 border-gray-200 border-rounded-lg  overflow-auto flex flex-row gap-3">
-                            {recommendedProducts.map((product, index) => (
-                                <div key={index} className="relative w-[13vw] h-[16.5vw] items-center">
-                                    <img src={product.image} alt={product.name} className="absolute mx-auto z-1 w-full p-3"/>
-                                    <div className="relative bg-gray-100 w-[13vw] h-[13vw]"></div>
-                                    <div>
-                                        <div className="text-sm text-zinc-400 leading-tight">{product.category}</div>
-                                        <div className="text-lg text-grey-400 leading-tight">{product.name}</div>
-                                        <div className="text-sm italic text-zinc-400 leading-tight">₱{product.price}</div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
     );

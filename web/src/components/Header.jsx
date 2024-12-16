@@ -1,59 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { Link as ScrollLink, scroller } from "react-scroll";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
 
 function Header() {
   const location = useLocation();
-  const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [error, setError] = useState(null);
-  const [cartItems, setCartItems] = useState([]);
-
-  useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    setIsAuthenticated(!!storedToken);  // Check if user is authenticated
-
-    const fetchCartItems = async () => {
-                try {
-                    const localToken = localStorage.getItem('token');
-    
-                    // Fetch shopping cart with items
-                    const response = await axios.get(`http://localhost:8590/shoppingCart/find`, {
-                        headers: {
-                            'Authorization': `${localToken}`,
-                        }
-                    });
-    
-                    const cart = response.data;
-                    setCartItems(cart.items);
-                    console.log(cartItems.length);
-                } catch (err) {
-                    setError(err.message);
-                    console.error('Error fetching cart items:', err);
-                }
-            };
-    
-            fetchCartItems();
-  }, []);
 
   const [showSearch, setShowSearch] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    setIsAuthenticated(!!storedToken);
+  }, []);
 
   const handleAuthAction = () => {
     if (isAuthenticated) {
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
       setIsAuthenticated(false);
       navigate("/frontPage");
     } else {
       navigate("/loginPage");
     }
-    setShowDropdown(false);
   };
 
-  const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   const handleShirtCatalogClick = () => {
@@ -94,101 +67,77 @@ function Header() {
     }
   };
 
-  // Handle Profile button click to navigate to login if user is not authenticated
   const handleProfileClick = () => {
+    const userId = localStorage.getItem("userId");
     if (isAuthenticated) {
-      navigate(`/accountPage/${userId}`);  // Navigate to profile page if authenticated
+      navigate(`/accountPage/${userId}`);
     } else {
-      navigate("/loginPage");  // Navigate to login page if not authenticated
+      navigate("/loginPage");
     }
   };
 
-  const handleViewOrders = () => {
-    navigate("/ordersPage");
-    setShowDropdown(false);
-  }
-
   return (
-    <div className="w-full z-50">
-      <header className="bg-[#f4f2f2] flex justify-between items-center w-[100vw] p-6 h-2 sm:h-[2vw] md:h-[3vw] lg:h-[4vw] xl:h-[4vw] 2xl:h-[5vw] ">
-        <Link to="/frontPage" className="cursor-pointer hover:scale-105 z-50">
-          <img src="/logo.png" alt="Logo" className="w-[20vw] sm:w-[8vw] md:w-[9vw] lg:w-[9vw] xl:w-[9vw] 2xl:w-[10vw]" />
+    <div className="w-full z-[100]">
+      <header className="bg-[#f4f2f2] flex justify-between items-center p-6 w-full h-16 relative">
+        {/* Logo */}
+        <Link to="/frontPage" className="cursor-pointer absolute left-6">
+          <img src="/logo.png" alt="Logo" className="w-[20vw] sm:w-[10vw] md:w-[8vw]" />
         </Link>
 
-        <div className="flex items-center space-x-8 z-50">
-          <button onClick={handleShirtCatalogClick} className="cursor-pointer font-bold text-[1.35rem] p-4 tracking-wider no-underline text-black hover:text-gray-600 hover:scale-105 sm:text-[1.15rem] md:text-[1.20rem] lg:text-[1.25rem] xl:text-[1.30rem] 2xl:text-[1.35rem]">
+        {/* Desktop Navigation - Centered */}
+        <div className="hidden lg:flex items-center space-x-8 justify-center w-full">
+          <button onClick={handleShirtCatalogClick} className="font-bold text-lg text-black hover:text-gray-600">
             SHIRT CATALOG
           </button>
-          <Link to="/shopPage" className="cursor-pointer font-bold text-[1.35rem] p-4 tracking-wider no-underline text-black hover:text-gray-600 hover:scale-105 sm:text-[1.15rem] md:text-[1.20rem] lg:text-[1.25rem] xl:text-[1.30rem] 2xl:text-[1.35rem]">
+          <Link to="/shopPage" className="font-bold text-lg text-black hover:text-gray-600">
             SHOP
           </Link>
-          <button onClick={handleShirtCatalogClick2} className="cursor-pointer font-bold text-[1.35rem] p-4 tracking-wider no-underline text-black hover:text-gray-600 hover:scale-105 sm:text-[1.15rem] md:text-[1.20rem] lg:text-[1.25rem] xl:text-[1.30rem] 2xl:text-[1.35rem]">
+          <button onClick={handleShirtCatalogClick2} className="font-bold text-lg text-black hover:text-gray-600">
             ABOUT
           </button>
         </div>
 
-        <div className="flex items-center space-x-4 z-50">
-          <div className="relative">
-            {showSearch && (
-              <div
-                className="absolute bg-white border border-gray-300 shadow-sm rounded-md p-1 w-[300px] z-50"
-                style={{ top: "50%", right: "4.5vw", transform: "translateY(-50%)" }}
-              >
-                <input
-                  type="text"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Search..."
-                />
-              </div>
-            )}
-          </div>
-
-          <Link to="/checkoutPage" className="relative">
-            <span className="material-symbols-outlined text-[3rem] font-extrabold cursor-pointer hover:scale-105 sm:text-[2rem] md:text-[2rem] lg:text-[2.3rem] xl:text-[2.85rem] 2xl:text-[3rem] sm:p-1.2 md:p-1.4 lg:p-1.6 xl:p-1.8m xl:p-2">
+        {/* Mobile Menu Icon and Shopping Bag Icon */}
+        <div className="flex items-center space-x-4 absolute right-6">
+          <Link to="/checkoutPage">
+            <span className="material-symbols-outlined text-3xl font-extrabold cursor-pointer">
               shopping_bag
-              {cartItems.length > 0 && (
-                <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs sm:text-[0.75rem] md:text-[0.75rem] lg:text-[0.75rem] xl:text-[0.75rem] 2xl:text-[0.75rem] w-6 h-6 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-5 lg:h-5 xl:w-5 xl:h-5 2xl:w-5 2xl:h-5 flex items-center justify-center">
-                  {cartItems.length}
-                </span>
-              )}
             </span>
           </Link>
-
-          <div className="relative">
-            <span 
-              onClick={toggleDropdown}
-              className="material-symbols-outlined text-[3rem] font-extrabold cursor-pointer hover:scale-105 sm:text-[2rem] md:text-[2rem] lg:text-[2.3rem] xl:text-[2.85rem] 2xl:text-[3rem] sm:p-1.2 md:p-1.4 lg:p-1.6 xl:p-1.8m xl:p-2 pr-0"
-            >
-              more_vert
-            </span>
-            
-            {showDropdown && (
-              <div className="absolute right-5 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-                {isAuthenticated && (<>
-                  <button 
-                  onClick={handleProfileClick}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
-                >
-                  Profile
-                </button>
-                  <button 
-                  onClick={handleViewOrders}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
-                >
-                  View Orders
-                </button>
-                </>)}
-                <button 
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
-                  onClick={handleAuthAction}
-                >
-                  {isAuthenticated ? "Sign out" : "Sign in"}
-                </button>
-              </div>
-            )}
-          </div>
+          <span
+            onClick={toggleMobileMenu}
+            className="material-symbols-outlined text-3xl font-extrabold cursor-pointer"
+          >
+            more_vert
+          </span>
         </div>
       </header>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="absolute top-16 left-0 md:left-[83.5vw] w-full md:w-1/6  bg-white shadow-lg z-[100]">
+          <div className="flex flex-col items-start p-4 space-y-4">
+            <button onClick={handleShirtCatalogClick} className="text-black block md:hidden font-bold">
+              SHIRT CATALOG
+            </button>
+            <Link to="/shopPage" className="text-black block md:hidden font-bold">
+              SHOP
+            </Link>
+            <button onClick={handleShirtCatalogClick2} className="text-black block md:hidden font-bold">
+              ABOUT
+            </button>
+            <button onClick={handleProfileClick} className="text-black font-bold">
+              Profile
+            </button>
+            <Link to="/ordersPage" className="text-black font-bold">
+              View Orders
+            </Link>
+            <button onClick={handleAuthAction} className="text-black font-bold">
+              {isAuthenticated ? "Sign out" : "Sign in"}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -80,7 +80,16 @@ const getAllOrdersByUser = async (userID) => {
         where: { userID: userID },
         include: {
             address: true,
-            items: true,
+            items: {
+                include: {
+                    inventory: {
+                        include: {
+                            product: true,
+                        }
+                    }
+                }
+            }
+
         }
     });
 

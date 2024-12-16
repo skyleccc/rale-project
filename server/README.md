@@ -99,10 +99,3 @@ Example: `localhost:3000/user/editDetails/3`
 |                     | `/productReview/delete/{id}`   | **Deletes** a product review by ID                     | `DELETE`                | None                                                      | Yes + Admin Role |
 
 ---
-
-## Possible Concerns
-
-- No handling for email, password, and any other attributes in the database (e.g. password length, email validation, phone number).
-- No data for account creation date
-
----

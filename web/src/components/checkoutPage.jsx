@@ -33,7 +33,13 @@ function CheckoutPage() {
 
                 setUserData(getUserResponse.data);
                 // Sort addresses by isPrimary
-                userData.addresses.sort((a, b) => (a.isPrimary ? -1 : 1));
+                if (getUserResponse.data && getUserResponse.data.addresses && getUserResponse.data.addresses.length > 1) {
+                    const sortedAddresses = getUserResponse.data.addresses.sort((a, b) => (a.isPrimary ? -1 : 1));
+                    setUserData((prevData) => ({
+                        ...prevData,
+                        addresses: sortedAddresses,
+                    }));
+                }
 
                 // Fetch shopping cart with items
                 const response = await axios.get(`http://localhost:8590/shoppingCart/find`, {
@@ -117,10 +123,10 @@ function CheckoutPage() {
     };
 
     const checkout = async () => {
-        // if (!userId || !addressId) {
-        //     setCheckoutError("Invalid userId or addressId");
-        //     return;
-        // }
+        if(!userData.addresses || userData.addresses.length === 0) {
+            setCheckoutError("No address found. Please add an address in your profile.");
+            return;
+        }
 
         try {
             const localToken = localStorage.getItem('token');

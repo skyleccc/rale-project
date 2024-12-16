@@ -70,7 +70,7 @@ function AccountPage() {
             if (!tokenedit) throw new Error("Unauthorized");
 
             // Update user details
-            await axios.put(`http://localhost:8590/user/editDetails/${userId}`, 
+            await axios.put(`http://localhost:8590/user/editDetails/${userData.userID}`, 
             {
                 email: tempData.email,
                 username: tempData.username,
@@ -121,13 +121,21 @@ function AccountPage() {
 
     const handleAddAddress = async (e) => {
         e.preventDefault();
+        if(loading) return;
+
+        setLoading(true);
         try {
             const token = localStorage.getItem("token");
             if (!token) throw new Error("Unauthorized");
 
+            // Check if the first address is not primary
+            if (userData.addresses.length === 0 || !userData.addresses[0].isPrimary) {
+                newAddress.isPrimary = true;
+            }
+
             const response = await axios.post(`http://localhost:8590/address/add`, {
                 ...newAddress,
-                userID: userId,
+                userID: userData.userID,
             }, {
                 headers: { Authorization: `${token}` },
             });
@@ -148,18 +156,23 @@ function AccountPage() {
             closeModal();
         } catch (err) {
             console.error("Error adding address:", err);
+        } finally {
+            setLoading(false);
         }
     };
 
     const handleEditAddress = async (e) => {
         e.preventDefault();
+        if(loading) return;
+
+        setLoading(true);
         try {
             const token = localStorage.getItem("token");
             if (!token) throw new Error("Unauthorized");
 
             const response = await axios.put(`http://localhost:8590/address/edit/${selectedAddress.addressID}`, {
                 ...newAddress,
-                userID: userId,
+                userID: userData.userID,
             }, {
                 headers: { Authorization: `${token}` },
             });
@@ -182,6 +195,8 @@ function AccountPage() {
             closeModal();
         } catch (err) {
             console.error("Error editing address:", err);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -256,6 +271,10 @@ function AccountPage() {
 
     const handleChangePassword = async (e) => {
         e.preventDefault();
+        if(loading) return;
+
+        setLoading(true);
+
         if (passwordData.newPassword !== passwordData.confirmPassword) {
             alert("New password and confirm password do not match");
             return;
@@ -283,6 +302,8 @@ function AccountPage() {
         } catch (err) {
             console.error("Error changing password:", err);
             alert("Error changing password");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -324,7 +345,7 @@ function AccountPage() {
                             {!isEditing ? (
                                 <button
                                     onClick={() => setIsEditing(true)}
-                                    className="flex items-center gap-2 bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition w-1/2 md:w-1/6 sm:w-auto"
+                                    className="flex items-center justify-center gap-2 bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition w-1/2 md:w-1/6 sm:w-auto text-center"
                                 >
                                     Edit Profile
                                 </button>
@@ -422,7 +443,7 @@ function AccountPage() {
                             <div className="font-bold text-2xl sm:text-3xl">Stored Addresses</div> {/* Adjusted text size for mobile */}
                             <button
                                 onClick={openModal}
-                                className="flex items-center gap-2 bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition w-1/2 md:w-1/6 sm:w-auto"
+                                className="flex items-center justify-center gap-2 bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition w-1/2 md:w-1/6 sm:w-auto text-center"
                             >
                                 Add Address
                             </button>

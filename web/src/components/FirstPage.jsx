@@ -22,11 +22,15 @@ function Navbar() {
       />
 
       <div className="relative z-10 w-full h-screen">
-        <div className="font-dela-gothic-one text-[14vw] font-normal absolute top-[-50%] left-[48%] text-white tracking-[-30px] drop-shadow-lg">
+        <div className="font-dela-gothic-one text-[14vw] font-normal absolute top-[-50%] left-[48%] text-white tracking-[-30px] drop-shadow-lg hidden sm:block">
           WEAR
         </div>
-        <div className="font-helvetica text-[13vw] font-normal absolute top-[-30.5%] left-[47.5%] text-white tracking-[-10px] drop-shadow-lg">
+        <div className="font-helvetica text-[13vw] font-normal absolute top-[-30.5%] left-[47.5%] text-white tracking-[-10px] drop-shadow-lg hidden sm:block">
           BETTER
+        </div>
+        <div className="font-helvetica sm:hidden top-[-10%] left-[57%] text-5xl font-normal text-center tracking-[-4px] text-white absolute drop-shadow-md">
+          <p>WEAR</p>
+          <p className="absolute top-[40px]">BETTER</p>
         </div>
       </div>
 

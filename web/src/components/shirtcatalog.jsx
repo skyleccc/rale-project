@@ -2,8 +2,8 @@ import React from "react";
 
 function ShirtCatalog() {
   return (
-    <div id="shirtcatalog" className="relative h-[115vw] bg-white p-[100px] sm:scale-[50%] md:scale-[60%] lg:scale-[70%] xl:scale-[80%]  2xl:scale-[100%]">
-      <div className="h-full">
+    <div id="shirtcatalog" className=" relative h-[115vw] bg-white p-[100px] sm:scale-[50%] md:scale-[60%] lg:scale-[70%] xl:scale-[80%]  2xl:scale-[100%] sm:top-[40%] z-[-1]">
+      <div className="h-full hidden md:block">
 
         <div className="flex h-[55%] border-2 border-black">
 
@@ -94,7 +94,13 @@ function ShirtCatalog() {
           </div>
         </div>
       </div>
+
+      <div className="block md:hidden">
+        <img src="catalogShirt.jpg" alt="real" className=" absolute left-0 scale-90 top-[20vh]" />
+      </div>
+    
     </div>
+    
   );
 }
 

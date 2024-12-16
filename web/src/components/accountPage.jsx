@@ -297,61 +297,57 @@ function AccountPage() {
 
     return (
         <div className="bg-gray-200 w-full h-full overflow-hidden z-0">
-            <div className="relative p-10 w-full min-h-screen">
-                <div
-                    className="absolute font-bold font-archivo-black text-[11vw] tracking-tighter text-white"
+            <div className="relative p-0 md:p-4 w-full min-h-screen"> {/* Adjusted padding for mobile */}
+                {/* <div
+                    className="absolute font-bold font-archivo-black  text-[15vw] sm:text-[11vw] tracking-tighter text-white" // Changed for mobile view
                     style={{
                         top: "12%",
-                        left: "49%",
+                        left: "50%", // Centered text horizontally on mobile
                         transform: "translate(-50%, -50%) scaleX(1.4)",
                         whiteSpace: "nowrap",
                     }}>
                     ACCOUNT
-                </div>
-
-                <div className="bg-white z-10 flex flex-col p-5 mb-[5%] mx-[10%] gap-4 rounded-2xl relative top-[11vh] h-auto">
-
-                    <div className="flex flex-row gap-16 p-3 mx-auto">
-                        <img src="alec.png" alt="alec" className="rounded-full w-[15vw]" />
+                </div> */}
+    
+                <div className="bg-white z-10 flex flex-col p-2 md:p-5 mb-[5%] mx-[5%] sm:mx-[10%] gap-4 rounded-2xl relative top-[5vh] h-auto"> {/* Adjusted margin for mobile */}
+                    <div className="flex flex-col sm:flex-row gap-16 p-3 mx-auto"> {/* Adjusted for mobile flex column */}
                         <div className="my-auto">
-                            <div className="text-7xl">
+                            <div className="text-3xl md:text-7xl"> {/* Adjusted text size for mobile */}
                                 {userData.userFirstName} {userData.userLastName}
                             </div>
-                            <div className="text-4xl font-light text-gray-500">@{userData.username}</div>
+                            <div className="text-2xl sm:text-4xl font-light text-gray-500">@{userData.username}</div> {/* Adjusted text size for mobile */}
                         </div>
                     </div>
-                    
+    
                     <div className="bg-gray-200 w-full h-auto p-5 gap-7 flex flex-col rounded-xl">
-                        
-
-                    <div className="flex justify-between items-center">
-                        <div className="font-bold text-3xl">Account Details</div>
-                        {!isEditing ? (
-                            <button
-                            onClick={() => setIsEditing(true)}
-                            className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition w-full sm:w-auto"
-                            >
-                            Edit Profile
-                            </button>
-                        ) : (
-                            <div className="flex gap-2">
-                            <button
-                                onClick={handleCancel}
-                                className="flex items-center gap-2 bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transitionflex items-center gap-2 bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition w-full sm:w-auto"
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                onClick={handleSaveChanges}
-                                className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition"
-                            >
-                                Save Changes
-                            </button>
-                            </div>
-                        )}
+                        <div className="flex justify-between items-center">
+                            <div className="font-bold text-2xl sm:text-3xl">Account Details</div> {/* Adjusted text size for mobile */}
+                            {!isEditing ? (
+                                <button
+                                    onClick={() => setIsEditing(true)}
+                                    className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition w-1/2 md:w-1/6 sm:w-auto"
+                                >
+                                    Edit Profile
+                                </button>
+                            ) : (
+                                <div className="flex gap-2">
+                                    <button
+                                        onClick={handleCancel}
+                                        className="flex items-center gap-2 bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition w-full sm:w-auto"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        onClick={handleSaveChanges}
+                                        className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition w-full sm:w-auto"
+                                    >
+                                        Save Changes
+                                    </button>
+                                </div>
+                            )}
                         </div>
-                        <hr></hr>
-                        <div className="flex gap-4">
+                        <hr />
+                        <div className="flex flex-col sm:flex-row gap-4">
                             <div className="flex-1">
                                 <div className="text-lg font-semibold">First Name</div>
                                 <input
@@ -375,7 +371,7 @@ function AccountPage() {
                                 />
                             </div>
                         </div>
-                        <div className="flex gap-4">
+                        <div className="flex flex-col sm:flex-row gap-4">
                             <div className="flex-1">
                                 <div className="text-lg font-semibold">Username</div>
                                 <input
@@ -399,7 +395,7 @@ function AccountPage() {
                                 />
                             </div>
                         </div>
-                        <div className="flex gap-4">
+                        <div className="flex flex-col sm:flex-row gap-4">
                             <div className="flex-1">
                                 <div className="text-lg font-semibold">Phone Number</div>
                                 <input
@@ -412,28 +408,28 @@ function AccountPage() {
                                 />
                             </div>
                             <div className="flex-1 justify-start gap-4 mt-4">
-                            <button
-                                onClick={openPasswordModal}
-                                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
-                            >
-                                Change Password
-                            </button>
-                        </div>
+                                <button
+                                    onClick={openPasswordModal}
+                                    className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition w-full sm:w-auto"
+                                >
+                                    Change Password
+                                </button>
+                            </div>
                         </div>
                     </div>
-
+    
                     <div className="bg-gray-200 w-full h-auto p-5 gap-7 flex flex-col rounded-xl">
                         <div className="flex justify-between items-center">
-                            <div className="font-bold text-3xl">Stored Addresses</div>
+                            <div className="font-bold text-2xl sm:text-3xl">Stored Addresses</div> {/* Adjusted text size for mobile */}
                             <button
                                 onClick={openModal}
-                                className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+                                className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition w-1/2 md:w-1/6 sm:w-auto"
                             >
                                 Add Address
                             </button>
                         </div>
                         <hr />
-
+    
                         {userData.addresses.map((address) => (
                             <div key={address.addressID} className={`w-full h-auto p-5 gap-7 rounded-lg flex justify-between items-center ${address.isPrimary ? 'bg-white' : 'bg-gray-100'}`}>
                                 <div>
@@ -473,10 +469,9 @@ function AccountPage() {
                             </div>
                         ))}
                     </div>
-
                 </div>
             </div>
-
+    
             {isModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center z-50">
                     <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -561,7 +556,7 @@ function AccountPage() {
                     </div>
                 </div>
             )}
-
+    
             {isPasswordModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center z-50">
                     <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -629,9 +624,10 @@ function AccountPage() {
                     </div>
                 </div>
             )}
-
+    
         </div>
     );
+    
 }
 
 export default AccountPage;

@@ -77,14 +77,14 @@ function Header() {
   };
 
   return (
-    <div className="w-full z-[100]">
+    <div className="w-full z-50">
       <header className="bg-[#f4f2f2] flex justify-between items-center p-6 w-full h-16 relative">
-        {/* Logo */}
+
         <Link to="/frontPage" className="cursor-pointer absolute left-6">
           <img src="/logo.png" alt="Logo" className="w-[20vw] sm:w-[10vw] md:w-[8vw]" />
         </Link>
 
-        {/* Desktop Navigation - Centered */}
+
         <div className="hidden lg:flex items-center space-x-8 justify-center w-full">
           <button onClick={handleShirtCatalogClick} className="font-bold text-lg text-black hover:text-gray-600">
             SHIRT CATALOG
@@ -97,7 +97,7 @@ function Header() {
           </button>
         </div>
 
-        {/* Mobile Menu Icon and Shopping Bag Icon */}
+
         <div className="flex items-center space-x-4 absolute right-6">
           <Link to="/checkoutPage">
             <span className="material-symbols-outlined text-3xl font-extrabold cursor-pointer">
@@ -113,7 +113,6 @@ function Header() {
         </div>
       </header>
 
-      {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="absolute top-16 left-0 md:left-[83.5vw] w-full md:w-1/6  bg-white shadow-lg z-[100]">
           <div className="flex flex-col items-start p-4 space-y-4">

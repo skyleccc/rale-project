@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function ShopSection() {
   return (
@@ -24,11 +25,11 @@ function ShopSection() {
               <img src="/dndR1.png" alt="Logo" className="w-[18vw] sm:w-[20vw] md:w-[18vw] lg:w-[18vw] drop-shadow-md" />
             </div>
             <div className="grid justify-items-center md:justify-items-stretch">
-              <p className="font-helvetica text-[1vw] text-grey absolute top-[82%]">T-Shirt</p>
-              <p className="font-helvetica font-bold text-[1.25vw] absolute top-[87.2%]">
+              <p className="font-helvetica text-[1.5vw] sm:text-[1vw] text-grey absolute top-[82%]">T-Shirt</p>
+              <p className="font-helvetica font-bold text-[1.7vw] md:text-[1.25vw] absolute top-[87.2%]">
                 Do Not Disturb Tee
               </p>
-              <p className="font-helvetica text-[1vw] text-grey absolute top-[94%]">₱499.00</p>
+              <p className="font-helvetica text-[1.5vw] sm:text-[1vw] text-grey absolute top-[94%]">₱499.00</p>
             </div>
           </div>
 
@@ -37,11 +38,11 @@ function ShopSection() {
               <img src="/existenceB1.png" alt="Logo" className="w-[18vw] sm:w-[20vw] md:w-[18vw] lg:w-[18vw] drop-shadow-md" />
             </div>
             <div  className="grid justify-items-center md:justify-items-stretch">
-              <p className="font-helvetica text-[1vw] text-grey absolute top-[82%]">T-Shirt</p>
-              <p className="font-helvetica font-bold text-[1.25vw] absolute top-[87.2%]">
+              <p className="font-helvetica text-[1.5vw] sm:text-[1vw] text-grey absolute top-[82%]">T-Shirt</p>
+              <p className="font-helvetica font-bold text-[1.7vw] md:text-[1.25vw] absolute top-[87.2%]">
                 Existence Confronts Tee
               </p>
-              <p className="font-helvetica text-[1vw] text-grey absolute top-[94%]">₱499.00</p>
+              <p className="font-helvetica text-[1.5vw] sm:text-[1vw] text-grey absolute top-[94%]">₱499.00</p>
             </div>
           </div>
 
@@ -50,11 +51,11 @@ function ShopSection() {
               <img src="/ordinaryG1.png" alt="Logo" className="w-[18vw] sm:w-[20vw] md:w-[18vw] lg:w-[18vw] drop-shadow-md" />
             </div>
             <div className="grid justify-items-center md:justify-items-stretch">
-              <p className="font-helvetica text-[1vw] text-grey absolute top-[82%]">T-Shirt</p>
-              <p className="font-helvetica font-bold text-[1.25vw] absolute top-[87.2%]">
+              <p className="font-helvetica text-[1.5vw] sm:text-[1vw] text-grey absolute top-[82%]">T-Shirt</p>
+              <p className="font-helvetica font-bold text-[1.7vw] md:text-[1.25vw] absolute top-[87.2%]">
                 Extra Ordinary Tee
               </p>
-              <p className="font-helvetica text-[1vw] text-grey absolute top-[94%]">₱499.00</p>
+              <p className="font-helvetica text-[1.5vw] sm:text-[1vw] text-grey absolute top-[94%]">₱499.00</p>
             </div>
           </div>
 
@@ -63,11 +64,11 @@ function ShopSection() {
               <img src="/anotherDay2.png" alt="Logo" className="w-[18vw] sm:w-[20vw] md:w-[18vw] lg:w-[18vw] drop-shadow-md" />
             </div>
             <div className="grid justify-items-center md:justify-items-stretch">
-              <p className="font-helvetica text-[1vw] text-grey absolute top-[82%]">T-Shirt</p>
-              <p className="font-helvetica font-bold text-[1.25vw] absolute top-[87.2%]">
+              <p className="font-helvetica text-[1.5vw] sm:text-[1vw] text-grey absolute top-[82%]">T-Shirt</p>
+              <p className="font-helvetica font-bold text-[1.7vw] md:text-[1.25vw] absolute top-[87.2%]">
                 Another Day Tee
               </p>
-              <p className="font-helvetica text-[1vw] text-grey absolute top-[94%]">₱499.00</p>
+              <p className="font-helvetica text-[1.5vw] sm:text-[1vw] text-grey absolute top-[94%]">₱499.00</p>
             </div>
           </div>
 
@@ -77,11 +78,11 @@ function ShopSection() {
               <img src="/tranq2.png" alt="Logo" className="w-[18vw] sm:w-[20vw] md:w-[18vw] lg:w-[18vw] drop-shadow-md" />
             </div>
             <div className="grid justify-items-center md:justify-items-stretch">
-              <p className="font-helvetica text-[1vw] text-grey absolute top-[82%]">T-Shirt</p>
-              <p className="font-helvetica font-bold text-[1.25vw] absolute top-[87.2%]">
+              <p className="font-helvetica text-[1.5vw] sm:text-[1vw] text-grey absolute top-[82%]">T-Shirt</p>
+              <p className="font-helvetica font-bold text-[1.7vw] md:text-[1.25vw] absolute top-[87.2%]">
                 Tranquility Tee
               </p>
-              <p className="font-helvetica text-[1vw] text-grey absolute top-[94%]">₱499.00</p>
+              <p className="font-helvetica text-[1.5vw] sm:text-[1vw] text-grey absolute top-[94%]">₱499.00</p>
             </div>
           </div>
 
@@ -90,11 +91,11 @@ function ShopSection() {
               <img src="/conceit1.png" alt="Logo" className="w-[18vw] sm:w-[20vw] md:w-[18vw] lg:w-[18vw] drop-shadow-md" />
             </div>
             <div className="grid justify-items-center md:justify-items-stretch">
-              <p className="font-helvetica text-[1vw] text-grey absolute top-[82%]">T-Shirt</p>
-              <p className="font-helvetica font-bold text-[1.25vw] absolute top-[87.2%]">
+              <p className="font-helvetica text-[1.5vw] sm:text-[1vw] text-grey absolute top-[82%]">T-Shirt</p>
+              <p className="font-helvetica font-bold text-[1.7vw] md:text-[1.25vw] absolute top-[87.2%]">
                 Conceit Tee
               </p>
-              <p className="font-helvetica text-[1vw] text-grey absolute top-[94%]">₱499.00</p>
+              <p className="font-helvetica text-[1.5vw] sm:text-[1vw] text-grey absolute top-[94%]">₱499.00</p>
             </div>
           </div>
 
@@ -103,11 +104,11 @@ function ShopSection() {
               <img src="/superiorityG.png" alt="Logo" className="w-[18vw] sm:w-[20vw] md:w-[18vw] lg:w-[18vw] drop-shadow-md" />
             </div>
             <div className="grid justify-items-center md:justify-items-stretch">
-              <p className="font-helvetica text-[1vw] text-grey absolute top-[82%]">T-Shirt</p>
-              <p className="font-helvetica font-bold text-[1.25vw] absolute top-[87.2%]">
+              <p className="font-helvetica text-[1.5vw] sm:text-[1vw] text-grey absolute top-[82%]">T-Shirt</p>
+              <p className="font-helvetica font-bold text-[1.7vw] md:text-[1.25vw] absolute top-[87.2%]">
                 Superiority Tee
               </p>
-              <p className="font-helvetica text-[1vw] text-grey absolute top-[94%]">₱499.00</p>
+              <p className="font-helvetica text-[1.5vw] sm:text-[1vw] text-grey absolute top-[94%]">₱499.00</p>
             </div>
           </div>
 
@@ -116,11 +117,11 @@ function ShopSection() {
               <img src="/rise2.png" alt="Logo" className="w-[18vw] sm:w-[20vw] md:w-[18vw] lg:w-[18vw] drop-shadow-md" />
             </div>
             <div className="grid justify-items-center md:justify-items-stretch">
-              <p className="font-helvetica text-[1vw] text-grey absolute top-[82%]">T-Shirt</p>
-              <p className="font-helvetica font-bold text-[1.25vw] absolute top-[87.2%]">
+              <p className="font-helvetica text-[1.5vw] sm:text-[1vw] text-grey absolute top-[82%]">T-Shirt</p>
+              <p className="font-helvetica font-bold text-[1.7vw] md:text-[1.25vw] absolute top-[87.2%]">
                 Rise Beyond Tee
               </p>
-              <p className="font-helvetica text-[1vw] text-grey absolute top-[94%]">₱499.00</p>
+              <p className="font-helvetica text-[1.5vw] sm:text-[1vw] text-grey absolute top-[94%]">₱499.00</p>
             </div>
           </div>
 

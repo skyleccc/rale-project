@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import useShopStore from './shopStore';
-import Header from "./Header"; // Adjust path as needed
+import Header from "./Header";
 
 function ProductPage() {
     const { productId } = useParams();
@@ -16,7 +16,6 @@ function ProductPage() {
     const [cartDetails, setcartDetails] = useState({});
     
 
-    // Assuming your store has a method to get recommended products
     const { getRecommendedProducts } = useShopStore();
     const [recommendedProducts, setRecommendedProducts] = useState([]);
 
@@ -34,7 +33,7 @@ function ProductPage() {
         console.log("Product ID:", productId);
         const fetchUserData = async () => {
             try {
-                // Get user ID from localStorage or auth system
+
                 const localToken = localStorage.getItem('token');
                 if (!localToken) {
                     return;
@@ -65,11 +64,11 @@ function ProductPage() {
         const fetchProductDetails = async () => {
             try {
                 setLoading(true);
-                // Axios API call for product details
+
                 const response = await axios.get(`http://localhost:8590/product/${productId}`);
                 setSelectedProduct(response.data);
 
-                // Fetch recommended products
+
             } finally {
                 setLoading(false);
             }
@@ -106,7 +105,7 @@ function ProductPage() {
 
             if (existingItem) {
                 console.log(existingItem.itemID);
-                // Increment quantity if item already exists
+
                 await axios.put(`http://localhost:8590/cartItem/edit/${existingItem.itemID}`, {
                     quantity: existingItem.quantity + 1,
                 }, {
@@ -116,7 +115,7 @@ function ProductPage() {
                 });
                 console.log("Product already in cart. Quantity increased.");
             } else {
-                // Add new item to cart
+
                 await axios.post(`http://localhost:8590/cartItem/add`, {
                     cartID: cartDetails.cartID,
                     productID: selectedProduct.productID,
@@ -130,8 +129,7 @@ function ProductPage() {
                 console.log("Product added to cart.");
             }
 
-            // Optional: Show success message or trigger cart update
-            // You could add a toast notification here
+
         } catch (err) {
             setCartError(err.response?.data?.message || "Failed to add item to cart");
         } finally {
@@ -146,57 +144,60 @@ function ProductPage() {
     return (
         <div>
             <Header />
-            <div className="w-full h-auto bg-gray-200 p-10">
-                {/* Main Product Display */}
-                <div className="bg-white rounded-2xl">
-                    <div className="p-5">
-                        <div className="flex gap-4">
-                            {/* Main Image */}
-                            <div className="bg-gray-200 w-[40vw] h-[40vw] rounded-xl">
+            <div className="w-full h-auto bg-gray-200 p-4 md:p-10">
+            <div className="bg-white rounded-2xl">
+                    <div className="p-3">
+                        <div className="flex flex-col md:flex-row gap-4 md:gap-4">
+                            <div className="bg-gray-200 w-full md:w-[40vw] h-full md:h-[40vw] rounded-xl">
                                 <img 
                                     src={selectedProduct.imagePath} 
                                     alt={selectedProduct.name} 
                                     className="p-4 drop-shadow-xl"
                                 />
                             </div>
-
-                            {/* Thumbnails */}
-                            <div className="flex flex-col gap-4">
+    
+                            <div className="flex flex-row md:flex-col gap-2 md:gap-4 overflow-auto">
                                 {selectedProduct.thumbnails?.map((thumb, index) => (
-                                    <div key={index} className="bg-gray-200 w-[11vw] h-[11vw] rounded-xl">
+                                    <div 
+                                        key={index} 
+                                        className="bg-gray-200 w-[15vw] h-[15vw] md:w-[11vw] md:h-[11vw] rounded-lg md:rounded-xl flex-shrink-0"
+                                    >
                                         <img 
                                             src={thumb} 
                                             alt={`${selectedProduct.name} thumbnail`} 
-                                            className="p-3 drop-shadow-xl"
+                                            className="p-2 md:p-3 drop-shadow-xl w-full h-full object-cover rounded-lg md:rounded-xl"
                                         />
                                     </div>
                                 ))}
                             </div>
-
-                            <div className="bg-gray-400 w-[0.2vw] h-auto" />
-
-                            {/* Product Details */}
-                            <div className="flex flex-col py-10">
-                                <div className="text-2xl text-gray-500">{selectedProduct.category}</div>
-                                <div className="text-6xl text-black">{selectedProduct.name}</div>
-
-                                <div className="text-yellow-300 p-1 gap-1 flex align-middle">
+    
+                            <div className="hidden md:block bg-gray-400 w-[0.2vw] h-auto" />
+    
+                            <div className="flex flex-col py-4 md:py-10">
+                                <div className="text-lg md:text-2xl text-gray-500">{selectedProduct.category}</div>
+                                <div className="text-3xl md:text-6xl text-black">{selectedProduct.name}</div>
+    
+                                <div className="text-yellow-300 p-1 gap-1 flex items-center">
                                     {[...Array(5)].map((_, i) => (
-                                        <span key={i} className="material-symbols-outlined text-4xl">star_rate</span>
+                                        <span 
+                                            key={i} 
+                                            className="material-symbols-outlined text-2xl md:text-4xl"
+                                        >
+                                            star_rate
+                                        </span>
                                     ))}
-                                    <div className="text-gray-300 text-xl py-1">
+                                    <div className="text-gray-300 text-sm md:text-xl py-1">
                                         {selectedProduct.ratings} Ratings | {selectedProduct.sold} Sold
                                     </div>
                                 </div>
-
-                                <div className="text-5xl text-gray-400 italic">₱{selectedProduct.price}.00</div>
-
-                                {/* Sizes */}
-                                <div className="w-5/6 h-1/6 p-3 flex flex-row justify-between mx-auto">
+    
+                                <div className="text-2xl md:text-5xl text-gray-400 italic">₱{selectedProduct.price}.00</div>
+    
+                                <div className="w-full md:w-5/6 p-2 md:p-3 flex flex-wrap gap-2 justify-center md:justify-between">
                                     {Object.keys(sizeMapping).map((size) => (
                                         <div 
                                             key={size}
-                                            className={`text-3xl p-2 w-[3.5vw] h-[3.54vw] grid justify-items-center rounded-lg cursor-pointer transition-colors ${
+                                            className={`text-base md:text-3xl p-2 w-[12vw] h-[12vw] md:w-[3.5vw] md:h-[3.54vw] grid justify-items-center rounded-lg cursor-pointer transition-colors ${
                                                 selectedSize === size 
                                                     ? 'bg-gray-600 text-white' 
                                                     : 'bg-gray-400 text-white hover:bg-gray-500'
@@ -210,18 +211,16 @@ function ProductPage() {
                                         </div>
                                     ))}
                                 </div>
-
-                                {/* Error Message */}
+    
                                 {cartError && (
-                                    <div className="text-red-500 text-center mt-2">
+                                    <div className="text-red-500 text-center mt-2 text-sm md:text-base">
                                         {cartError}
                                     </div>
                                 )}
-
-                                {/* Add to Cart Button */}
-                                <div className="w-full h-2/6 p-3 mx-auto">
+    
+                                <div className="w-full h-auto p-2 md:p-3 mx-auto">
                                     <button 
-                                        className={`text-3xl p-3 rounded-2xl w-full transition-colors ${
+                                        className={`text-base md:text-3xl p-2 md:p-3 rounded-lg md:rounded-2xl w-full transition-colors ${
                                             addingToCart 
                                                 ? 'bg-gray-300 cursor-not-allowed' 
                                                 : 'bg-gray-100 hover:bg-gray-200'
@@ -236,22 +235,24 @@ function ProductPage() {
                         </div>
                     </div>
                 </div>
-
-                {/* Recommended Products */}
-                <div className=" bg-white z-1 rounded-2xl my-4 p-4">
-                    <div className=" text-3xl float-left">Recommended For You</div>
-
-                    <div className="p-5 relative">   
-
-                        <div className="relative p-3 rounded-xl border-2 border-gray-200 border-rounded-lg  overflow-auto flex flex-row gap-3">
+    
+                <div className="hidden md:block bg-white z-1 rounded-xl md:rounded-2xl my-4 p-4">
+                    <div className="text-xl md:text-3xl float-left">Recommended For You</div>
+    
+                    <div className="p-3 relative">   
+                        <div className="relative p-2 md:p-3 rounded-lg md:rounded-xl border-2 border-gray-200 overflow-auto flex flex-row gap-3">
                             {recommendedProducts.map((product, index) => (
-                                <div key={index} className="relative w-[13vw] h-[16.5vw] items-center">
-                                    <img src={product.image} alt={product.name} className="absolute mx-auto z-1 w-full p-3"/>
-                                    <div className="relative bg-gray-100 w-[13vw] h-[13vw]"></div>
+                                <div key={index} className="relative w-[35vw] h-[45vw] md:w-[13vw] md:h-[16.5vw] flex-shrink-0">
+                                    <img 
+                                        src={product.image} 
+                                        alt={product.name} 
+                                        className="absolute mx-auto z-1 w-full h-full object-cover p-2 md:p-3 rounded-lg md:rounded-xl"
+                                    />
+                                    <div className="relative bg-gray-100 w-[35vw] h-[35vw] md:w-[13vw] md:h-[13vw] rounded-lg md:rounded-xl"></div>
                                     <div>
-                                        <div className="text-sm text-zinc-400 leading-tight">{product.category}</div>
-                                        <div className="text-lg text-grey-400 leading-tight">{product.name}</div>
-                                        <div className="text-sm italic text-zinc-400 leading-tight">₱{product.price}</div>
+                                        <div className="text-xs md:text-sm text-zinc-400 leading-tight">{product.category}</div>
+                                        <div className="text-sm md:text-lg text-gray-400 leading-tight">{product.name}</div>
+                                        <div className="text-xs md:text-sm italic text-zinc-400 leading-tight">₱{product.price}</div>
                                     </div>
                                 </div>
                             ))}
@@ -261,6 +262,7 @@ function ProductPage() {
             </div>
         </div>
     );
+    
 }
 
 export default ProductPage;

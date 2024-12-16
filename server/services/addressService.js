@@ -80,10 +80,25 @@ const getAllAddressByUser = async (userID) => {
     return addressList;
 };
 
+const setPrimaryAddress = async (addressID, userID) => {
+    await prisma.address.updateMany({
+        where: {userID: userID},
+        data: {isPrimary: false},
+    });
+
+    const updatedAddress = await prisma.address.update({
+        where: {addressID: addressID},
+        data: {isPrimary: true},
+    });
+
+    return updatedAddress;
+}
+
 module.exports = {
     createAddress,
     updateAddress,
     deleteAddress,
     findAddress,
     getAllAddressByUser,
+    setPrimaryAddress,
 };

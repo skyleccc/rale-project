@@ -76,10 +76,24 @@ const getAllUserAddressesController = async (req, res) => {
     res.json(addresses);
 };
 
+const setPrimaryAddressController = async (req, res) => {
+    const addressID = parseInt(req.params.id, 10);
+    const userID = req.user.id;
+
+    if (!addressID || !Number.isInteger(addressID)) {
+        return handleValidationError(res, 401, "Invalid address ID");
+    }
+
+    const primaryAddress = await addressService.setPrimaryAddress(addressID, userID);
+
+    res.json(primaryAddress);
+}
+
 module.exports = {
     addAddressController,
     editAddressController,
     deleteAddressController,
     getAddressController,
     getAllUserAddressesController,
+    setPrimaryAddressController,
 };

@@ -72,7 +72,7 @@ const findOrderController = async (req, res) => {
 };
 
 const getAllOrdersByUserController = async (req, res) => {
-    const userID = req.body.id;
+    const userID = req.user.id;
 
     if(!userID || !Number.isInteger(userID)){
         return handleValidationError(res, 401, "Invalid user ID");

@@ -1,20 +1,39 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Header from "./Header";
 
 function CheckoutPage() {
+    const navigate = useNavigate();
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [checkoutError, setCheckoutError] = useState(null);
     const [checkoutSuccess, setCheckoutSuccess] = useState(null);
-    const userId = localStorage.getItem("userId");
-    const addressId = localStorage.getItem("addressID");
+    const [userData, setUserData] = useState(null);
+
+    
 
     useEffect(() => {
+        const localToken = localStorage.getItem('token');
+        if (!localToken) {
+            navigate('/loginPage');
+            return;
+        }
+
         const fetchCartItems = async () => {
             try {
                 const localToken = localStorage.getItem('token');
+
+                const getUserResponse = await axios.get(`http://localhost:8590/user/validate/user`, {
+                    headers: {
+                        'Authorization': `${localToken}`,
+                    }
+                });
+
+                setUserData(getUserResponse.data);
+                // Sort addresses by isPrimary
+                userData.addresses.sort((a, b) => (a.isPrimary ? -1 : 1));
 
                 // Fetch shopping cart with items
                 const response = await axios.get(`http://localhost:8590/shoppingCart/find`, {
@@ -25,7 +44,7 @@ function CheckoutPage() {
 
                 const cart = response.data;
                 setCartItems(cart.items);
-                console.log('Cart items:', cart.items);
+                console.log(cartItems.length);
             } catch (err) {
                 setError(err.message);
                 console.error('Error fetching cart items:', err);
@@ -98,22 +117,18 @@ function CheckoutPage() {
     };
 
     const checkout = async () => {
-        if (!userId || !addressId) {
-            setCheckoutError("Invalid userId or addressId");
-            return;
-        }
+        // if (!userId || !addressId) {
+        //     setCheckoutError("Invalid userId or addressId");
+        //     return;
+        // }
 
         try {
             const localToken = localStorage.getItem('token');
-            console.log('userId:', userId);
-            console.log('addressId:', addressId);
-            console.log('token:', localToken);
             const shippingAmount = 50.0; // Replace with actual shipping amount
             const paymentMethod = "Cash"; // Replace with actual payment method
 
             const orderResponse = await axios.post(`http://localhost:8590/order/add`, {
-                userID: parseInt(userId,10),
-                addressID: parseInt(addressId,10),
+                addressID: userData.addresses[0].addressID,
                 isPaid: false,
                 shippingAmount: shippingAmount,
                 paymentMethod: paymentMethod
@@ -180,73 +195,85 @@ function CheckoutPage() {
                 </div>
 
                 <div className="bg-white z-10 flex flex-col p-5 mx-[10%] gap-4 rounded-2xl relative top-[12vh]">
-                    <div className="flex flex-row text-lg">
-                        <div className="w-1/2">
-                            <div>Product</div>
-                        </div>
-                        <div className="w-1/2 flex justify-between">
-                            <div>Price</div>
-                            <div>Quantity</div>
-                            <div>Total Price</div>
-                        </div>
-                    </div>
+                    
 
-                    {cartItems.map(item => (
-                        <div key={item.itemID} className="relative bg-gray-200 p-4 rounded-xl h-auto flex flex-row">
-                            <button
-                                onClick={() => deleteItem(item.itemID)}
-                                className="absolute top-2 right-2 text-red-500 text-xl"
-                            >
-                                ✕
-                            </button>
-                            <div className="w-1/2 flex gap-3 flex-row">
-                                <div className="relative w-[12vw]">
-                                    <img src={item.inventory.product.imagePath} alt={item.inventory.product.name} className="absolute p-3 rounded-3xl z-1 drop-shadow-lg" />
-                                    <div className="bg-white w-[12vw] h-[12vw] rounded-xl"></div>
-                                </div>
-                                <div className="my-auto">
-                                    <div className="text-lg text-gray-400">{item.inventory.product.category}</div>
-                                    <div className="text-3xl">{item.inventory.product.name}</div>
-                                    <div className="">{item.inventory.product.description}</div>
-                                </div>
+                {cartItems.length === 0 ? (
+                    <div className="text-center text-xl text-gray-500 italic">No items in shopping cart</div>
+                ) : (
+                    <>
+                        <div className="flex flex-row text-lg font-bold">
+                            <div className="w-1/2">
+                                <div>Product</div>
                             </div>
                             <div className="w-1/2 flex justify-between">
-                                <div className="my-auto text-xl text-gray-500 italic">₱{item.inventory.product.price}</div>
-                                <div className="text-xl flex my-auto flex-row border-2 border-black rounded-xl">
-                                    <button
-                                        onClick={(e) => {
-                                            handleButtonClick(e);
-                                            updateQuantity(item.itemID, -1);
-                                        }}
-                                        className="border-y-1 p-1 px-2 rounded-xl border-black transition-all duration-150"
-                                        disabled={item.quantity <= 1}
-                                    >
-                                        -
-                                    </button>
-                                    <div className="border-1 p-1 px-3 border-black">{item.quantity}</div>
-                                    <button
-                                        onClick={(e) => {
-                                            handleButtonClick(e);
-                                            updateQuantity(item.itemID, 1);
-                                        }}
-                                        className="border-y-1 p-1 px-2 rounded-xl border-black transition-all duration-150"
-                                        disabled={item.quantity >= item.inventory.product.productQuantity}
-                                    >
-                                        +
-                                    </button>
-                                </div>
-                                <div className="my-auto text-xl text-gray-500 italic">₱{getItemTotal(item.quantity, item.inventory.product.price)}</div>
+                                <div>Price</div>
+                                <div>Quantity</div>
+                                <div>Total Price</div>
                             </div>
                         </div>
-                    ))}
+                        
+                        {cartItems.map(item => (
+                            <div key={item.itemID} className="relative bg-gray-200 p-4 rounded-xl h-auto flex flex-row">
+                                <button
+                                    onClick={() => deleteItem(item.itemID)}
+                                    className="absolute top-2 right-2 text-red-500 text-xl"
+                                >
+                                    ✕
+                                </button>
+                                <div className="w-1/2 flex gap-3 flex-row">
+                                    <div className="relative w-[12vw]">
+                                        <img src={item.inventory.product.imagePath} alt={item.inventory.product.name} className="absolute p-3 rounded-3xl z-1 drop-shadow-lg" />
+                                        <div className="bg-white w-[12vw] h-[12vw] rounded-xl"></div>
+                                    </div>
+                                    <div className="my-auto">
+                                        <div className="text-lg text-gray-400">{item.inventory.product.category}</div>
+                                        <div className="text-3xl">{item.inventory.product.name} ({item.inventory.size.name})</div>
+                                        <div className="">{item.inventory.product.description}</div>
+                                    </div>
+                                </div>
+                                <div className="w-1/2 flex justify-between">
+                                    <div className="my-auto text-xl text-gray-500 italic">₱{parseFloat(item.inventory.product.price).toFixed(2)}</div>
+                                    <div className="text-xl flex my-auto flex-row border-2 border-black rounded-xl">
+                                        <button
+                                            onClick={(e) => {
+                                                handleButtonClick(e);
+                                                updateQuantity(item.itemID, -1);
+                                            }}
+                                            className="border-y-1 p-1 px-2 rounded-xl border-black transition-all duration-150"
+                                            disabled={item.quantity <= 1}
+                                        >
+                                            -
+                                        </button>
+                                        <div className="border-1 p-1 px-3 border-black">{item.quantity}</div>
+                                        <button
+                                            onClick={(e) => {
+                                                handleButtonClick(e);
+                                                updateQuantity(item.itemID, 1);
+                                            }}
+                                            className="border-y-1 p-1 px-2 rounded-xl border-black transition-all duration-150"
+                                            disabled={item.quantity >= item.inventory.product.productQuantity}
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+                                    <div className="my-auto text-xl text-gray-500 italic">₱{getItemTotal(item.quantity, item.inventory.product.price).toFixed(2)}</div>
+                                </div>
+                            </div>
+                        ))}
+                    </>
+                )}
                 </div>
 
                 <div className="bg-white z-10 flex p-4 mx-[10%] gap-4 flex-row justify-between rounded-2xl relative top-[15vh]">
                     <div className="flex flex-row gap-4">
                         <div className="text-xl my-auto">Total Cost: </div>
-                        <div className="text-6xl my-auto">₱{totalCost}</div>
+                        <div className="text-6xl my-auto">₱{totalCost.toFixed(2)}</div>
                     </div>
-                    <button onClick={checkout} className="bg-gray-200 w-[18vw] my-auto grid justify-items-center p-3 text-2xl rounded-xl">Checkout</button>
+                    <button onClick={checkout} 
+                    className={`bg-gray-200 w-[18vw] my-auto grid justify-items-center p-3 text-2xl rounded-xl ${cartItems.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                     disabled={cartItems.length === 0} >
+                        Checkout
+                    </button>
                 </div>
 
                 {checkoutError && (

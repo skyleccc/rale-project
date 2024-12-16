@@ -106,7 +106,7 @@ function RegisterPage() {
     } catch (error) {
       console.error("Registration error:", error.response?.data || error.message);
       setErrors({
-        submit: error.response?.data?.message || "Registration failed. Please try again."
+        submit: error.response?.data?.error || "Registration failed. Please try again."
       });
     }
   };

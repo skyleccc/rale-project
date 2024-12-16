@@ -44,15 +44,15 @@ const updateUserDetails = async ({ userID, email, username, userFirstName, userL
     return updatedUser;
 };
 
-const updateUserPassword = async ({ id, newPassword }) => {
-    const find = await findUser(id);
+const updateUserPassword = async ({ userID, newPassword }) => {
+    const find = await findUser(userID);
 
     if(!find) return null;
 
     const hashedPassword = await hashPassword(newPassword);
 
     const updatedUser = await prisma.user.update({
-        where: { userID: id },
+        where: { userID: userID },
         data: { password: hashedPassword },
     });
         
@@ -62,11 +62,13 @@ const updateUserPassword = async ({ id, newPassword }) => {
 const findUser = async (id) => {
     const user = await prisma.user.findUnique({
         select: {
+            userID: true,
             email: true,
             userFirstName: true,
             userLastName: true,
             username: true,
             phoneNumber: true,
+            addresses: true,
             role: true,
         },
         where: { userID: id },

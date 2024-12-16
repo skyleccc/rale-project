@@ -1,16 +1,41 @@
 import React, { useEffect, useState } from "react";
 import { Link as ScrollLink, scroller } from "react-scroll";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Header() {
   const location = useLocation();
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [error, setError] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
     setIsAuthenticated(!!storedToken);  // Check if user is authenticated
+
+    const fetchCartItems = async () => {
+                try {
+                    const localToken = localStorage.getItem('token');
+    
+                    // Fetch shopping cart with items
+                    const response = await axios.get(`http://localhost:8590/shoppingCart/find`, {
+                        headers: {
+                            'Authorization': `${localToken}`,
+                        }
+                    });
+    
+                    const cart = response.data;
+                    setCartItems(cart.items);
+                    console.log(cartItems.length);
+                } catch (err) {
+                    setError(err.message);
+                    console.error('Error fetching cart items:', err);
+                }
+            };
+    
+            fetchCartItems();
   }, []);
 
   const [showSearch, setShowSearch] = useState(false);
@@ -25,10 +50,6 @@ function Header() {
       navigate("/loginPage");
     }
     setShowDropdown(false);
-  };
-
-  const toggleSearchBar = () => {
-    setShowSearch(!showSearch);
   };
 
   const toggleDropdown = () => {
@@ -82,6 +103,11 @@ function Header() {
     }
   };
 
+  const handleViewOrders = () => {
+    navigate("/ordersPage");
+    setShowDropdown(false);
+  }
+
   return (
     <div className="w-full z-50">
       <header className="bg-[#f4f2f2] flex justify-between items-center w-[100vw] p-6 h-2 sm:h-[2vw] md:h-[3vw] lg:h-[4vw] xl:h-[4vw] 2xl:h-[5vw] ">
@@ -117,9 +143,14 @@ function Header() {
             )}
           </div>
 
-          <Link to="/checkoutPage">
+          <Link to="/checkoutPage" className="relative">
             <span className="material-symbols-outlined text-[3rem] font-extrabold cursor-pointer hover:scale-105 sm:text-[2rem] md:text-[2rem] lg:text-[2.3rem] xl:text-[2.85rem] 2xl:text-[3rem] sm:p-1.2 md:p-1.4 lg:p-1.6 xl:p-1.8m xl:p-2">
               shopping_bag
+              {cartItems.length > 0 && (
+                <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs sm:text-[0.75rem] md:text-[0.75rem] lg:text-[0.75rem] xl:text-[0.75rem] 2xl:text-[0.75rem] w-6 h-6 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-5 lg:h-5 xl:w-5 xl:h-5 2xl:w-5 2xl:h-5 flex items-center justify-center">
+                  {cartItems.length}
+                </span>
+              )}
             </span>
           </Link>
 
@@ -132,13 +163,21 @@ function Header() {
             </span>
             
             {showDropdown && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-                <button 
+              <div className="absolute right-5 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                {isAuthenticated && (<>
+                  <button 
                   onClick={handleProfileClick}
                   className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                 >
                   Profile
                 </button>
+                  <button 
+                  onClick={handleViewOrders}
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                >
+                  View Orders
+                </button>
+                </>)}
                 <button 
                   className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                   onClick={handleAuthAction}

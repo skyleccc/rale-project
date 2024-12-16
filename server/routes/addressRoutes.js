@@ -10,6 +10,6 @@ router.put("/edit/:id", validateToken, asyncHandler(addressController.editAddres
 router.delete("/delete/:id", validateToken, asyncHandler(addressController.deleteAddressController));
 router.get("/", validateToken, asyncHandler(addressController.getAllUserAddressesController));
 router.get("/:id", validateToken, asyncHandler(addressController.getAddressController));
-
+router.put("/setPrimary/:id", validateToken, asyncHandler(addressController.setPrimaryAddressController));
 
 module.exports = router;

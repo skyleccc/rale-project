@@ -14,6 +14,7 @@ function ProductPage() {
     const [addingToCart, setAddingToCart] = useState(false);
     const [cartError, setCartError] = useState(null);
     const [cartDetails, setcartDetails] = useState({});
+    
 
     // Assuming your store has a method to get recommended products
     const { getRecommendedProducts } = useShopStore();

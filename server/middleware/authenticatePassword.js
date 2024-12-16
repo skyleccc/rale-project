@@ -4,6 +4,7 @@ const { getUserPassword } = require("../services/authService");
 const validatePassword = async (req, res, next) => {
     try {
         const {email, password} = req.body;
+        
 
         const getPassDB = await getUserPassword(email);
 

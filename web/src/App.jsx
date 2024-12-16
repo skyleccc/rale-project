@@ -19,6 +19,7 @@ import RegisterPage from "./components/registerPage";
 import ShopPage from "./components/shopPage";
 import FrontPage from "./components/frontPage";
 import AuthenticateUser from './components/authenticate';
+import OrderPage from './components/orderPage';
 
 function App() {
 
@@ -31,10 +32,11 @@ function App() {
         <Route path="/shopPage" element={<ShopPage />} />
         <Route path="/frontPage" element={<FrontPage />} />
         <Route path="/checkoutPage" element={<CheckoutPage />} />
-        <Route path="/accountPage/:userId" element = {<AccountPage/>} />
+        <Route path="/accountPage/:userId" element = {<div><Header/><AccountPage/></div>} />
         <Route path="/product/:productId" element = {<ProductPage/>} />
         <Route path="/loginPage" element = {<LoginPage/>} />
         <Route path="/registerPage" element = {<RegisterPage/>} />
+        <Route path="/ordersPage" element = {<OrderPage/>} />
       </Routes>
     </Router>
   );
